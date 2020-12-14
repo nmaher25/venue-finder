@@ -12,6 +12,7 @@
 		DFFF0D9C2587A1EA008B3BA1 /* VenueSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0D9B2587A1EA008B3BA1 /* VenueSearchVC.swift */; };
 		DFFF0DA12587A1EC008B3BA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFFF0DA02587A1EC008B3BA1 /* Assets.xcassets */; };
 		DFFF0DA42587A1EC008B3BA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFFF0DA22587A1EC008B3BA1 /* LaunchScreen.storyboard */; };
+		DFFF0DB125880C07008B3BA1 /* VenueFinderSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DB025880C07008B3BA1 /* VenueFinderSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		DFFF0DA02587A1EC008B3BA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFFF0DA32587A1EC008B3BA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DFFF0DA52587A1EC008B3BA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFFF0DB025880C07008B3BA1 /* VenueFinderSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueFinderSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,31 @@
 		DFFF0D962587A1EA008B3BA1 /* VenueFinder */ = {
 			isa = PBXGroup;
 			children = (
+				DFFF0DAF25880BA7008B3BA1 /* Views */,
+				DFFF0DAE25880AF5008B3BA1 /* View Controllers */,
 				DFFF0D972587A1EA008B3BA1 /* AppDelegate.swift */,
 				DFFF0D992587A1EA008B3BA1 /* SceneDelegate.swift */,
-				DFFF0D9B2587A1EA008B3BA1 /* VenueSearchVC.swift */,
 				DFFF0DA02587A1EC008B3BA1 /* Assets.xcassets */,
 				DFFF0DA22587A1EC008B3BA1 /* LaunchScreen.storyboard */,
 				DFFF0DA52587A1EC008B3BA1 /* Info.plist */,
 			);
 			path = VenueFinder;
+			sourceTree = "<group>";
+		};
+		DFFF0DAE25880AF5008B3BA1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DFFF0D9B2587A1EA008B3BA1 /* VenueSearchVC.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DFFF0DAF25880BA7008B3BA1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DFFF0DB025880C07008B3BA1 /* VenueFinderSearchView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +155,7 @@
 			files = (
 				DFFF0D9C2587A1EA008B3BA1 /* VenueSearchVC.swift in Sources */,
 				DFFF0D982587A1EA008B3BA1 /* AppDelegate.swift in Sources */,
+				DFFF0DB125880C07008B3BA1 /* VenueFinderSearchView.swift in Sources */,
 				DFFF0D9A2587A1EA008B3BA1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
