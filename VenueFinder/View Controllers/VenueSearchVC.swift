@@ -11,11 +11,16 @@ import UIKit
 import MapKit
 
 class VenueSearchVC: UIViewController {
-
+    let reuseIdentifier = "VenueCell"
+    
     let venueSearchView = VenueFinderSearchView()
+    let tableView = UITableView()
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(VenueTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -26,6 +31,7 @@ class VenueSearchVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .green
+        tableView.backgroundColor = .orange
         configureUI()
         venueSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
@@ -42,16 +48,35 @@ class VenueSearchVC: UIViewController {
         
         
         view.addSubview(venueSearchView)
+        view.addSubview(tableView)
         venueSearchView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             venueSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             venueSearchView.leftAnchor.constraint(equalTo: view.leftAnchor),
             venueSearchView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            venueSearchView.heightAnchor.constraint(equalToConstant: 90)
+            venueSearchView.heightAnchor.constraint(equalToConstant: 90),
+            
+            tableView.topAnchor.constraint(equalTo: venueSearchView.bottomAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
 }
 
-
-
+extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
+        cell.configure()
+        
+        return cell
+    }
+    
+    
+}
