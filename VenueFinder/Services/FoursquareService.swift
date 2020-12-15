@@ -21,10 +21,10 @@ class FoursquareService {
         return dateFormatter.string(from: date)
     }()
     
-    public func getVenues(atLatitude lat: Double,
+    public func fetchVenues(atLatitude lat: Double,
                           atLongitude long: Double,
                           forQuery query: String,
-                          completion: @escaping([Venue]?, Error) -> Void) {
+                          completion: @escaping([Venue]?) -> Void) {
         
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
@@ -40,10 +40,10 @@ class FoursquareService {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data), let error = error {
-                completion(venues.response.venues, error)
+            if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data) {
+                completion(venues.response.venues)
             } else if let error = error {
-                completion(nil, error)
+                completion(nil) //add error message handling here
             }
             
         }
