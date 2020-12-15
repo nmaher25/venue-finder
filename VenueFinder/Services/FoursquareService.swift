@@ -37,7 +37,7 @@ class FoursquareService {
         ]
         
         let url = baseUrl.withQueries(queryParams)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in //change this to our own custom session 
             let jsonDecoder = JSONDecoder()
             
             if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data) {
