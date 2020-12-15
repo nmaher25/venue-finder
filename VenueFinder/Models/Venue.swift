@@ -11,10 +11,6 @@ import Foundation
 struct Response: Codable {
     let response: AllVenues
     
-    enum CodingKeys: String, CodingKey {
-        case response
-    }
-    
     struct AllVenues: Codable {
         let venues: [Venue]
     }
