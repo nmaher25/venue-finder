@@ -60,4 +60,12 @@ struct Venue: Codable {
             case formattedAddress
         }
     }
+    
+    init(from decoder: Decoder) throws {
+        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.id = try valueContainer.decode(String.self, forKey: CodingKeys.id)
+        self.name = try valueContainer.decode(String.self, forKey: CodingKeys.name)
+        self.location = try valueContainer.decode(Location.self, forKey: CodingKeys.location)
+    }
 }
