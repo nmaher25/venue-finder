@@ -17,10 +17,12 @@ struct Response: Codable {
     
     struct AllVenues: Codable {
         let venues: [Venue]
+    }
+    
+    init(from decoder: Decoder) throws {
+        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
         
-        enum CodingKeys: String, CodingKey {
-            case venues
-        }
+        self.response = try valueContainer.decode(AllVenues.self, forKey: CodingKeys.response)
     }
 }
 
@@ -29,11 +31,12 @@ struct Venue: Codable {
     let name: String
     let location: Location
     
+    /*
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case location
-    }
+    }*/
     
     struct Location: Codable {
         let address: String?
@@ -47,6 +50,7 @@ struct Venue: Codable {
         let country: String?
         let formattedAddress: [String]?
         
+        /*
         enum CodingKeys: String, CodingKey {
             case address
             case lat
@@ -58,14 +62,6 @@ struct Venue: Codable {
             case state
             case country
             case formattedAddress
-        }
-    }
-    
-    init(from decoder: Decoder) throws {
-        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.id = try valueContainer.decode(String.self, forKey: CodingKeys.id)
-        self.name = try valueContainer.decode(String.self, forKey: CodingKeys.name)
-        self.location = try valueContainer.decode(Location.self, forKey: CodingKeys.location)
+        }*/
     }
 }
