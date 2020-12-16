@@ -63,7 +63,6 @@ class VenueSearchVC: UIViewController {
                 let long = Double(currentLocation.coordinate.longitude)
             
                 fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
-                print("DEBUG: debug")
             }
         }
     }
