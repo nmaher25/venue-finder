@@ -14,7 +14,9 @@ class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
     let venueSearchView = VenueFinderSearchView()
+    
     let tableView = UITableView()
+    private var venues: [Venue] = []
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -63,7 +65,6 @@ class VenueSearchVC: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
 }
 
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
