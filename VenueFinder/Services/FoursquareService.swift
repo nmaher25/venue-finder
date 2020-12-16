@@ -31,7 +31,7 @@ class FoursquareService {
             "ll": "\(lat),\(long)",
             "query": query,
             "limit": "10",
-            "cliend_id": FOURSQUARE_CLIENT_ID,
+            "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
         ]
@@ -55,21 +55,24 @@ class FoursquareService {
     public func fetchVenues(nearPlace near: String,
                             forQuery query: String,
                             completion: @escaping([Venue]?) -> Void) {
+        var fetchedVenues: [Venue] = []
+        
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
-            "near": near,
-            "query": query,
+            "near": "\(near)",
+            "query": "\(query)",
             "limit": "10",
-            "cliend_id": FOURSQUARE_CLIENT_ID,
-            "client_secret": FOURSQUARE_CLIENT_SECRET,
-            "v": versionDate
+            "client_id": "\(FOURSQUARE_CLIENT_ID)",
+            "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
+            "v": "\(versionDate)"
         ]
-        
+        let urlSession = URLSession(configuration: URLSessionConfiguration.default)
         let url = baseUrl.withQueries(queryParams)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in 
+        let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             
-            if let data = data {
+            if let data = data, let stringData = String(data: data, encoding: .utf8) {
+                print(stringData)
                 let venues = try! jsonDecoder.decode(Response.self, from: data)
                 print("DEBUG: fetchVenuesNear API got results")
                 completion(venues.response.venues)
