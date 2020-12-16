@@ -145,6 +145,10 @@ extension VenueSearchVC {
             guard let venues = venues else { return }
             print("Can we get here?")
             self.venues = venues
+            for i in self.venues {
+                print("@@@@@@@@@@@@@@@@@@@")
+                print(i)
+            }
         }
         print("DEBUG: Fetch Venues Near Called")
     }

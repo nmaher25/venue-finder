@@ -13,10 +13,6 @@ struct Response: Codable {
     
     struct AllVenues: Codable {
         let venues: [Venue]
-        
-        enum CodingKeys: String, CodingKey {
-            case venues = "venues"
-        }
     }
 }
 
