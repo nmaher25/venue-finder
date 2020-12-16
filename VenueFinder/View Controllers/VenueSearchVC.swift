@@ -16,7 +16,17 @@ class VenueSearchVC: UIViewController {
     let locationManager = CLLocationManager()
     
     let venueSearchView = VenueFinderSearchView()
+    
     let tableView = UITableView()
+    
+    // datasource
+    private var venues: [Venue] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -47,7 +57,8 @@ class VenueSearchVC: UIViewController {
     @objc func searchButtonTapped() {
         let locationSearchText = venueSearchView.locationSearchBar.text ?? ""
         let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
-        print("Search button tapped with location \(locationSearchText) and venue \(venueSearchText)")
+        
+        fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
     }
     
     func configureUI() {
@@ -105,20 +116,40 @@ class VenueSearchVC: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
-
 }
 
+// Tableview Delegate & Datasource
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        venues.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
-        cell.configure()
+        let venue = venues[indexPath.row]
+        cell.venue = venue
         
         return cell
     }
     
     
+}
+
+// Helpers
+extension VenueSearchVC {
+    func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
+        
+        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
+            guard let venues = venues else { return }
+            self.venues = venues
+        }
+        print("DEBUG: Fetch Venues at Lat/Long Called")
+    }
+    
+    func fetchVenues(nearPlace place: String, forQuery query: String) {
+        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
+            guard let venues = venues else { return }
+            self.venues = venues
+        }
+    }
 }

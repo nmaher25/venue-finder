@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 class VenueTableViewCell: UITableViewCell {
+    var venue: Venue? {
+        didSet {
+            configure()
+        }
+    }
+    
     private let venueImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
@@ -24,7 +30,7 @@ class VenueTableViewCell: UITableViewCell {
     private let venueNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "Venue Name"
+        //label.text = "Venue Name"
         
         return label
     }()
@@ -32,7 +38,7 @@ class VenueTableViewCell: UITableViewCell {
     private let venueAddressLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "123 Main St."
+        //label.text = "123 Main St."
         
         return label
     }()
@@ -40,7 +46,7 @@ class VenueTableViewCell: UITableViewCell {
     private let venueDistanceLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "XX mi"
+        //label.text = "XX mi"
         
         return label
     }()
@@ -49,25 +55,26 @@ class VenueTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.accessoryType = .disclosureIndicator
-        
-        addSubview(venueImageView)
-        venueImageView.translatesAutoresizingMaskIntoConstraints = false
-        venueImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        venueImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        let verticalStack = UIStackView(arrangedSubviews: [venueNameLabel, venueAddressLabel])
-        verticalStack.axis = .vertical
-        verticalStack.spacing = 5
-        
-        addSubview(verticalStack)
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
-        verticalStack.leftAnchor.constraint(equalTo: venueImageView.rightAnchor, constant: 10).isActive = true
-        verticalStack.centerYAnchor.constraint(equalTo: venueImageView.centerYAnchor).isActive = true
-        
-        addSubview(venueDistanceLabel)
-        venueDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        venueDistanceLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
-        venueDistanceLabel.centerYAnchor.constraint(equalTo: verticalStack.centerYAnchor).isActive = true
+        DispatchQueue.main.async {
+            self.addSubview(self.venueImageView)
+            self.venueImageView.translatesAutoresizingMaskIntoConstraints = false
+            self.venueImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+            self.venueImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            
+            let verticalStack = UIStackView(arrangedSubviews: [self.venueNameLabel, self.venueAddressLabel])
+            verticalStack.axis = .vertical
+            verticalStack.spacing = 5
+            
+            self.addSubview(verticalStack)
+            verticalStack.translatesAutoresizingMaskIntoConstraints = false
+            verticalStack.leftAnchor.constraint(equalTo: self.venueImageView.rightAnchor, constant: 10).isActive = true
+            verticalStack.centerYAnchor.constraint(equalTo: self.venueImageView.centerYAnchor).isActive = true
+            
+            self.addSubview(self.venueDistanceLabel)
+            self.venueDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
+            self.venueDistanceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40).isActive = true
+            self.venueDistanceLabel.centerYAnchor.constraint(equalTo: verticalStack.centerYAnchor).isActive = true
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -79,6 +86,17 @@ class VenueTableViewCell: UITableViewCell {
     }
     
     func configure() {
-        
+        guard let venue = self.venue else { return }
+        DispatchQueue.main.async {
+            self.venueNameLabel.text = venue.name
+            self.venueAddressLabel.text = venue.location.address ?? "Could not retrieve address"
+            if let distance = venue.location.distance {
+                self.venueDistanceLabel.isHidden = false
+                self.venueDistanceLabel.text = "\(distance)"
+            } else {
+                self.venueDistanceLabel.isHidden = true
+            
+            }
+        }
     }
 }
