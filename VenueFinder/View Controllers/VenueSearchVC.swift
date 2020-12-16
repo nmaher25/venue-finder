@@ -18,7 +18,13 @@ class VenueSearchVC: UIViewController {
     let venueSearchView = VenueFinderSearchView()
     
     let tableView = UITableView()
-    private var venues: [Venue] = []
+    private var venues: [Venue] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -115,12 +121,13 @@ class VenueSearchVC: UIViewController {
 // Tableview Delegate & Datasource
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        venues.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
-        cell.configure()
+        let venue = venues[indexPath.row]
+        cell.venue = venue
         
         return cell
     }
@@ -146,10 +153,9 @@ extension VenueSearchVC {
             print("Can we get here?")
             self.venues = venues
             for i in self.venues {
-                print("@@@@@@@@@@@@@@@@@@@")
+                print("@@@@@@@@@DEBUG@@@@@@@@@@")
                 print(i)
             }
         }
-        print("DEBUG: Fetch Venues Near Called")
     }
 }
