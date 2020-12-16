@@ -50,6 +50,9 @@ class VenueSearchVC: UIViewController {
         let locationSearchText = venueSearchView.locationSearchBar.text ?? ""
         let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
         print("Search button tapped with location \(locationSearchText) and venue \(venueSearchText)")
+        
+        fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
+        print(venues)
     }
     
     func configureUI() {
@@ -109,6 +112,7 @@ class VenueSearchVC: UIViewController {
     }
 }
 
+// Tableview Delegate & Datasource
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -122,4 +126,26 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+}
+
+// Helpers
+extension VenueSearchVC {
+    func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
+        
+        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
+            guard let venues = venues else { return }
+            self.venues = venues
+        }
+        print("DEBUG: Fetch Venues at Lat/Long Called")
+    }
+    
+    func fetchVenues(nearPlace place: String, forQuery query: String) {
+        
+        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
+            guard let venues = venues else { return }
+            print("Can we get here?")
+            self.venues = venues
+        }
+        print("DEBUG: Fetch Venues Near Called")
+    }
 }

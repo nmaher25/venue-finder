@@ -30,7 +30,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "20",
+            "limit": "10",
             "cliend_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
@@ -40,8 +40,10 @@ class FoursquareService {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in //change this to our own custom session 
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data) {
-                completion(venues.response.venues)
+            if let data = data {
+                if let venues = try? jsonDecoder.decode(Response.self, from: data) {
+                    completion(venues.response.venues)
+                }
             } else if let error = error {
                 completion(nil) //add error message handling here
             }
@@ -57,17 +59,19 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": near,
             "query": query,
-            "limit": "20",
+            "limit": "10",
             "cliend_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
         ]
         
         let url = baseUrl.withQueries(queryParams)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in //change this to our own custom session
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in 
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data) {
+            if let data = data {
+                let venues = try! jsonDecoder.decode(Response.self, from: data)
+                print("DEBUG: fetchVenuesNear API got results")
                 completion(venues.response.venues)
             } else if let error = error {
                 completion(nil) //add error message handling here
