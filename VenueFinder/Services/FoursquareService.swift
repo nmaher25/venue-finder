@@ -55,8 +55,6 @@ class FoursquareService {
     public func fetchVenues(nearPlace near: String,
                             forQuery query: String,
                             completion: @escaping([Venue]?) -> Void) {
-        //var fetchedVenues: [Venue] = []
-        
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
             "near": "\(near)",
@@ -71,8 +69,7 @@ class FoursquareService {
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let stringData = String(data: data, encoding: .utf8) {
-                //print(stringData)
+            if let data = data {
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
                     print("DEBUG: fetchVenuesNear API got results")
                     completion(venues.response.venues)

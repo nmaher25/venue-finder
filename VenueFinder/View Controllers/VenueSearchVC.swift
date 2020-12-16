@@ -18,6 +18,8 @@ class VenueSearchVC: UIViewController {
     let venueSearchView = VenueFinderSearchView()
     
     let tableView = UITableView()
+    
+    // datasource
     private var venues: [Venue] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -55,10 +57,8 @@ class VenueSearchVC: UIViewController {
     @objc func searchButtonTapped() {
         let locationSearchText = venueSearchView.locationSearchBar.text ?? ""
         let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
-        print("Search button tapped with location \(locationSearchText) and venue \(venueSearchText)")
         
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
-        print(venues)
     }
     
     func configureUI() {
@@ -147,15 +147,9 @@ extension VenueSearchVC {
     }
     
     func fetchVenues(nearPlace place: String, forQuery query: String) {
-        
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
             guard let venues = venues else { return }
-            print("Can we get here?")
             self.venues = venues
-            for i in self.venues {
-                print("@@@@@@@@@DEBUG@@@@@@@@@@")
-                print(i)
-            }
         }
     }
 }
