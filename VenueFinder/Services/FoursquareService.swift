@@ -49,4 +49,31 @@ class FoursquareService {
         }
         task.resume()
     }
+    
+    public func fetchVenues(nearPlace near: String,
+                            forQuery query: String,
+                            completion: @escaping([Venue]?) -> Void) {
+        let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
+        let queryParams: [String: String] = [
+            "near": near,
+            "query": query,
+            "limit": "20",
+            "cliend_id": FOURSQUARE_CLIENT_ID,
+            "client_secret": FOURSQUARE_CLIENT_SECRET,
+            "v": versionDate
+        ]
+        
+        let url = baseUrl.withQueries(queryParams)!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in //change this to our own custom session
+            let jsonDecoder = JSONDecoder()
+            
+            if let data = data, let venues = try? jsonDecoder.decode(Response.self, from: data) {
+                completion(venues.response.venues)
+            } else if let error = error {
+                completion(nil) //add error message handling here
+            }
+            
+        }
+        task.resume()
+    }
 }
