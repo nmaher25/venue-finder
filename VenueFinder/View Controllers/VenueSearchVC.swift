@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
-import MapKit
+import CoreLocation
 
 class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
+    
+    let locationManager = CLLocationManager()
     
     let venueSearchView = VenueFinderSearchView()
     let tableView = UITableView()
@@ -29,11 +31,17 @@ class VenueSearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let locationBarButtonItem = UIBarButtonItem(image: UIImage(named: "location.fill"), style: .plain, target: self, action: #selector(locationBarButtonItemTapped))
+        self.navigationItem.rightBarButtonItem = locationBarButtonItem
+        
         view.backgroundColor = .green
         tableView.backgroundColor = .orange
         configureUI()
         venueSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func locationBarButtonItemTapped() {
+        configureUserLocationBasedOnPermissions()
     }
 
     @objc func searchButtonTapped() {
@@ -62,6 +70,40 @@ class VenueSearchVC: UIViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    func configureUserLocationBasedOnPermissions() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways, .authorizedWhenInUse:
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.startUpdatingLocation()
+            }
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+        case .denied, .restricted:
+            self.presentLocationAccessNeededAlert()
+        @unknown default:
+            print("whoops")
+        }
+    }
+    
+    func presentLocationAccessNeededAlert() {
+        guard let settingsAppUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        
+        let alert = UIAlertController(title: "Need Location Access",
+                                      message: "Location Access is required to find venues near your location.",
+                                      preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Go to Settings",
+                                      style: .cancel,
+                                      handler: { (alert) -> Void in
+                                        UIApplication.shared.open(settingsAppUrl,
+                                                                  options: [:],
+                                                                  completionHandler: nil)
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
 
 }
