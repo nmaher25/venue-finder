@@ -14,6 +14,7 @@ class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
     let locationManager = CLLocationManager()
+    var currentLocation: CLLocation? = nil
     
     let venueSearchView = VenueFinderSearchView()
     
@@ -44,6 +45,8 @@ class VenueSearchVC: UIViewController {
         let locationBarButtonItem = UIBarButtonItem(image: UIImage(named: "location.fill"), style: .plain, target: self, action: #selector(locationBarButtonItemTapped))
         self.navigationItem.rightBarButtonItem = locationBarButtonItem
         
+        locationManager.delegate = self
+        
         view.backgroundColor = .green
         tableView.backgroundColor = .orange
         configureUI()
@@ -52,6 +55,16 @@ class VenueSearchVC: UIViewController {
     
     @objc func locationBarButtonItemTapped() {
         configureUserLocationBasedOnPermissions()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            if let currentLocation = currentLocation {
+                let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
+                let lat = Double(currentLocation.coordinate.latitude)
+                let long = Double(currentLocation.coordinate.longitude)
+            
+                fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+            }
+        }
     }
 
     @objc func searchButtonTapped() {
@@ -89,10 +102,13 @@ class VenueSearchVC: UIViewController {
             if CLLocationManager.locationServicesEnabled() {
                 self.locationManager.startUpdatingLocation()
             }
+            
         case .notDetermined:
             self.locationManager.requestWhenInUseAuthorization()
+            
         case .denied, .restricted:
             self.presentLocationAccessNeededAlert()
+            
         @unknown default:
             print("whoops")
         }
@@ -135,6 +151,12 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+extension VenueSearchVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.currentLocation = locations.last
+    }
+}
+
 // Helpers
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
@@ -143,7 +165,6 @@ extension VenueSearchVC {
             guard let venues = venues else { return }
             self.venues = venues
         }
-        print("DEBUG: Fetch Venues at Lat/Long Called")
     }
     
     func fetchVenues(nearPlace place: String, forQuery query: String) {
