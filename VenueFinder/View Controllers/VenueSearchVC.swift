@@ -56,12 +56,15 @@ class VenueSearchVC: UIViewController {
     @objc func locationBarButtonItemTapped() {
         configureUserLocationBasedOnPermissions()
         
-        if let currentLocation = currentLocation {
-            let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
-            let lat = Double(currentLocation.coordinate.latitude)
-            let long = Double(currentLocation.coordinate.longitude)
+        if CLLocationManager.locationServicesEnabled() {
+            if let currentLocation = currentLocation {
+                let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
+                let lat = Double(currentLocation.coordinate.latitude)
+                let long = Double(currentLocation.coordinate.longitude)
             
-            fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+                fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+                print("DEBUG: debug")
+            }
         }
     }
 
