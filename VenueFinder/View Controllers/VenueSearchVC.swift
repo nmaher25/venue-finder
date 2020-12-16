@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
-import MapKit
+import CoreLocation
 
 class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
+    
+    let locationManager = CLLocationManager()
     
     let venueSearchView = VenueFinderSearchView()
     let tableView = UITableView()
