@@ -65,7 +65,7 @@ class VenueSearchVC: UIViewController {
         
         if CLLocationManager.locationServicesEnabled() {
             if let currentLocation = currentLocation {
-                let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
+                let venueSearchText = venueSearchView.venueTextField.text ?? ""
                 let lat = Double(currentLocation.coordinate.latitude)
                 let long = Double(currentLocation.coordinate.longitude)
             
@@ -75,8 +75,8 @@ class VenueSearchVC: UIViewController {
     }
 
     @objc func searchButtonTapped() {
-        let locationSearchText = venueSearchView.locationSearchBar.text ?? ""
-        let venueSearchText = venueSearchView.venueSearchBar.text ?? ""
+        let locationSearchText = venueSearchView.locationTextField.text ?? ""
+        let venueSearchText = venueSearchView.venueTextField.text ?? ""
         
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
     }

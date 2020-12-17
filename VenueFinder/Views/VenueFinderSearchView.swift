@@ -9,17 +9,45 @@
 import UIKit
 
 class VenueFinderSearchView: UIView {
-    lazy var locationSearchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "Where are you looking?"
-        return searchBar
+    
+    lazy var locationTextFieldView: UIView = {
+        let view = Utilities.inputContainerView(textField: locationTextField)
+        
+        return view
     }()
     
-    lazy var venueSearchBar: UISearchBar = {
+    lazy var venueTextFieldView: UIView = {
+        let view = Utilities.inputContainerView(textField: venueTextField)
+        
+        return view
+    }()
+    
+    let locationTextField: UITextField = {
+        let textField = Utilities.textField(withPlaceholder: "Where are you looking?")
+        
+        return textField
+    }()
+    
+    let venueTextField: UITextField = {
+        let textField = Utilities.textField(withPlaceholder: "Whatcha lookin' for?")
+        
+        return textField
+    }()
+    
+    
+    
+    /*
+    lazy var locationTextFieldView: UIView = {
+        let view = UIView()
+        
+        return view
+    }()
+    
+    lazy var venueTextFieldView: UIView = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Whatcha lookin' for?"
         return searchBar
-    }()
+    }()*/
     
     lazy var searchButton: UIButton = {
         let button = UIButton()
@@ -40,27 +68,27 @@ class VenueFinderSearchView: UIView {
     
     
     func configureUI() {
-        self.addSubview(locationSearchBar)
-        self.addSubview(venueSearchBar)
+        self.addSubview(locationTextFieldView)
+        self.addSubview(venueTextFieldView)
         self.addSubview(searchButton)
         self.backgroundColor = .systemPink
         
-        locationSearchBar.translatesAutoresizingMaskIntoConstraints = false
-        venueSearchBar.translatesAutoresizingMaskIntoConstraints = false
+        locationTextFieldView.translatesAutoresizingMaskIntoConstraints = false
+        venueTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            locationSearchBar.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            locationSearchBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            locationSearchBar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
-            locationSearchBar.heightAnchor.constraint(equalToConstant: 30),
+            locationTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            locationTextFieldView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            locationTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
+            locationTextFieldView.heightAnchor.constraint(equalToConstant: 30),
             
-            venueSearchBar.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            venueSearchBar.topAnchor.constraint(equalTo: locationSearchBar.bottomAnchor, constant: 10),
-            venueSearchBar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
-            venueSearchBar.heightAnchor.constraint(equalToConstant: 30),
+            venueTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            venueTextFieldView.topAnchor.constraint(equalTo: locationTextFieldView.bottomAnchor, constant: 10),
+            venueTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
+            venueTextFieldView.heightAnchor.constraint(equalToConstant: 30),
             
-            searchButton.leftAnchor.constraint(equalTo: locationSearchBar.rightAnchor, constant: 10),
+            searchButton.leftAnchor.constraint(equalTo: locationTextFieldView.rightAnchor, constant: 10),
             searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
             searchButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
