@@ -16,10 +16,16 @@ struct Response: Codable {
     }
 }
 
+struct ResponseDetail: Codable {
+    let response: Venue
+}
+
 struct Venue: Codable {
     let id: String
     let name: String
     let location: Location
+    let contact: Contact?
+    let url: String?
     
     struct Location: Codable {
         let address: String?
@@ -32,5 +38,14 @@ struct Venue: Codable {
         let state: String?
         let country: String?
         let formattedAddress: [String]?
+    }
+    
+    struct Contact: Codable {
+        let phone: String?
+        let formattedPhone: String?
+        let twitter: String?
+        let instagram: String?
+        let facebook: String?
+        let facebookUsername: String?
     }
 }

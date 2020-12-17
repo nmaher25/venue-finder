@@ -64,6 +64,7 @@ class VenueDetailVC: UIViewController {
 extension VenueDetailVC: VenueSearchDelegate {
     func didSelectVenue(_ venue: Venue) {
         print("DEBUG: didSelectVenue called from VenueDetailVC \nnetwork against the venue details endpoint using the passed in venue's ID")
+        print("Venue id passed in is \(venue.id)")
     }
     
     
