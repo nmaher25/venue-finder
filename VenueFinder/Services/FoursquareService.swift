@@ -30,7 +30,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "10",
+            "limit": "20",
             "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
@@ -59,7 +59,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "10",
+            "limit": "20",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
@@ -75,6 +75,34 @@ class FoursquareService {
                     completion(venues.response.venues)
                 }
             } else if let error = error {
+                completion(nil) //add error message handling here
+            }
+            
+        }
+        task.resume()
+    }
+    
+    public func fetchVenueDetails(forVenueId venueId: String,
+                                  completion: @escaping(Venue?) -> Void) {
+        let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/\(venueId)")!
+        let queryParams: [String: String] = [
+            "client_id": "\(FOURSQUARE_CLIENT_ID)",
+            "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
+            "v": "\(versionDate)"
+        ]
+        
+        let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+        let url = baseUrl.withQueries(queryParams)!
+        let task = urlSession.dataTask(with: url) { (data, response, error) in
+            let jsonDecoder = JSONDecoder()
+            
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                print(string)
+                let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
+                print("DEBUG: fetchVenueDetails API got results")
+                completion(venue.response.venue)
+            } else if let error = error {
+                print("DEBUG: fetchVenueDetails ERROR")
                 completion(nil) //add error message handling here
             }
             
