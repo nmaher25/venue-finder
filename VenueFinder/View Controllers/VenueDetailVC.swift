@@ -14,6 +14,7 @@ class VenueDetailVC: UIViewController {
     
     let venueDetailImage = UIImageView()
     let venueDetailContainer = VenueDetailContainerView()
+    let venueSocialContainer = VenueSocialContainerView()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -39,8 +40,16 @@ class VenueDetailVC: UIViewController {
         
         venueDetailContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        venueDetailContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -2).isActive = true
         venueDetailContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        
+        view.addSubview(venueSocialContainer)
+        venueSocialContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        venueSocialContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 2).isActive = true
+        venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
