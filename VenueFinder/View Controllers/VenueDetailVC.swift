@@ -15,7 +15,6 @@ class VenueDetailVC: UIViewController {
             DispatchQueue.main.async {
                 self.configureUI()
             }
-            //configureUI()
         }
     }
     
@@ -66,7 +65,7 @@ class VenueDetailVC: UIViewController {
         venueDetailImage.bottomAnchor.constraint(equalTo: venueDetailContainer.topAnchor, constant: -10).isActive = true
         
         if let venue = venue {
-            navigationController?.title = venue.name
+            navigationItem.title = venue.name
             
             if let formattedAddress = venue.location.formattedAddress {
                 venueDetailContainer.venueAddressBody.text = "\(formattedAddress[0])\n\(formattedAddress[1])\n\(formattedAddress[2])"
@@ -86,6 +85,27 @@ class VenueDetailVC: UIViewController {
             } else {
                 venueDetailContainer.venueWebsiteButton.isEnabled = false
                 venueDetailContainer.venueWebsiteButton.setTitle("No website found", for: .disabled)
+            }
+            
+            if let twitter = venue.contact?.twitter {
+                venueSocialContainer.twitterButton.setTitle("@\(twitter)", for: .normal)
+            } else {
+                venueSocialContainer.twitterButton.isEnabled = false
+                venueSocialContainer.twitterButton.setTitle("N/A", for: .disabled)
+            }
+            
+            if let instagram = venue.contact?.facebook {
+                venueSocialContainer.instagramButton.setTitle("@\(instagram)", for: .normal)
+            } else {
+                venueSocialContainer.instagramButton.isEnabled = false
+                venueSocialContainer.instagramButton.setTitle("N/A", for: .disabled)
+            }
+            
+            if let facebookUsername = venue.contact?.facebookUsername, let facebookId = venue.contact?.facebook {
+                venueSocialContainer.facebookButton.setTitle("/\(facebookUsername)", for: .normal)
+            } else {
+                venueSocialContainer.facebookButton.isEnabled = false
+                venueSocialContainer.facebookButton.setTitle("N/A", for: .disabled)
             }
         }
     }
