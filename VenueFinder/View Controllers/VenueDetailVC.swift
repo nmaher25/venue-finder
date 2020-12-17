@@ -10,7 +10,14 @@ import Foundation
 import UIKit
 
 class VenueDetailVC: UIViewController {
-    private var venue: Venue?
+    private var venue: Venue? {
+        didSet {
+            DispatchQueue.main.async {
+                self.configureUI()
+            }
+            //configureUI()
+        }
+    }
     
     let venueDetailImage = UIImageView()
     let venueDetailContainer = VenueDetailContainerView()
@@ -18,7 +25,6 @@ class VenueDetailVC: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -32,7 +38,7 @@ class VenueDetailVC: UIViewController {
     }
     
     func configureUI() {
-        navigationItem.title = "John's Pizza Place"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.addSubview(venueDetailContainer)
@@ -58,6 +64,30 @@ class VenueDetailVC: UIViewController {
         venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         venueDetailImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         venueDetailImage.bottomAnchor.constraint(equalTo: venueDetailContainer.topAnchor, constant: -10).isActive = true
+        
+        if let venue = venue {
+            navigationController?.title = venue.name
+            
+            if let formattedAddress = venue.location.formattedAddress {
+                venueDetailContainer.venueAddressBody.text = "\(formattedAddress[0])\n\(formattedAddress[1])\n\(formattedAddress[2])"
+            } else {
+                venueDetailContainer.venueAddressBody.text = "No address found"
+            }
+            
+            if let formattedPhoneNumber = venue.contact?.formattedPhone {
+                venueDetailContainer.venuePhoneButton.setTitle(formattedPhoneNumber, for: .normal)
+            } else {
+                venueDetailContainer.venuePhoneButton.isEnabled = false
+                venueDetailContainer.venuePhoneButton.setTitle("No phone number found", for: .disabled)
+            }
+            
+            if let website = venue.url {
+                venueDetailContainer.venueWebsiteButton.setTitle(website, for: .normal)
+            } else {
+                venueDetailContainer.venueWebsiteButton.isEnabled = false
+                venueDetailContainer.venueWebsiteButton.setTitle("No website found", for: .disabled)
+            }
+        }
     }
 }
 
@@ -65,6 +95,7 @@ extension VenueDetailVC: VenueSearchDelegate {
     func didSelectVenue(_ venue: Venue) {
         print("DEBUG: didSelectVenue called from VenueDetailVC \nnetwork against the venue details endpoint using the passed in venue's ID")
         print("Venue id passed in is \(venue.id)")
+        fetchVenueDetails(forVenue: venue)
     }
     
     

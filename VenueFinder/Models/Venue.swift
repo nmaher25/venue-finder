@@ -17,7 +17,11 @@ struct Response: Codable {
 }
 
 struct ResponseDetail: Codable {
-    let response: Venue
+    let response: VenueDetail
+    
+    struct VenueDetail: Codable {
+        let venue: Venue
+    }
 }
 
 struct Venue: Codable {
