@@ -69,3 +69,11 @@ extension VenueDetailVC: VenueSearchDelegate {
     
     
 }
+
+extension VenueDetailVC {
+    func fetchVenueDetails(forVenue venue: Venue) {
+        FoursquareService.shared.fetchVenueDetails(forVenueId: venue.id) { (venue) in
+            self.venue = venue
+        }
+    }
+}
