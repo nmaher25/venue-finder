@@ -19,6 +19,9 @@
 		DFFF0DBD25886504008B3BA1 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DBC25886504008B3BA1 /* Globals.swift */; };
 		DFFF0DBF2588661D008B3BA1 /* FoursquareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DBE2588661D008B3BA1 /* FoursquareService.swift */; };
 		DFFF0DC125886759008B3BA1 /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DC025886759008B3BA1 /* URL+Helpers.swift */; };
+		DFFF0DC3258AD98E008B3BA1 /* VenueDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DC2258AD98E008B3BA1 /* VenueDetailVC.swift */; };
+		DFFF0DC5258ADC9D008B3BA1 /* VenueDetailContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DC4258ADC9D008B3BA1 /* VenueDetailContainerView.swift */; };
+		DFFF0DC7258AEC04008B3BA1 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DC6258AEC04008B3BA1 /* Styler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		DFFF0DBC25886504008B3BA1 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		DFFF0DBE2588661D008B3BA1 /* FoursquareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoursquareService.swift; sourceTree = "<group>"; };
 		DFFF0DC025886759008B3BA1 /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
+		DFFF0DC2258AD98E008B3BA1 /* VenueDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueDetailVC.swift; sourceTree = "<group>"; };
+		DFFF0DC4258ADC9D008B3BA1 /* VenueDetailContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueDetailContainerView.swift; sourceTree = "<group>"; };
+		DFFF0DC6258AEC04008B3BA1 /* Styler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,7 @@
 				DFFF0D972587A1EA008B3BA1 /* AppDelegate.swift */,
 				DFFF0D992587A1EA008B3BA1 /* SceneDelegate.swift */,
 				DFFF0DBC25886504008B3BA1 /* Globals.swift */,
+				DFFF0DC6258AEC04008B3BA1 /* Styler.swift */,
 				DFFF0DA02587A1EC008B3BA1 /* Assets.xcassets */,
 				DFFF0DA22587A1EC008B3BA1 /* LaunchScreen.storyboard */,
 				DFFF0DA52587A1EC008B3BA1 /* Info.plist */,
@@ -87,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				DFFF0D9B2587A1EA008B3BA1 /* VenueSearchVC.swift */,
+				DFFF0DC2258AD98E008B3BA1 /* VenueDetailVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -95,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				DFFF0DB025880C07008B3BA1 /* VenueFinderSearchView.swift */,
+				DFFF0DC4258ADC9D008B3BA1 /* VenueDetailContainerView.swift */,
 				DFFF0DB525883793008B3BA1 /* VenueTableViewCell.swift */,
 			);
 			path = Views;
@@ -196,12 +205,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFFF0D9C2587A1EA008B3BA1 /* VenueSearchVC.swift in Sources */,
+				DFFF0DC5258ADC9D008B3BA1 /* VenueDetailContainerView.swift in Sources */,
 				DFFF0DC125886759008B3BA1 /* URL+Helpers.swift in Sources */,
 				DFFF0DBF2588661D008B3BA1 /* FoursquareService.swift in Sources */,
 				DFFF0DB425882099008B3BA1 /* UIColor+Helpers.swift in Sources */,
 				DFFF0D982587A1EA008B3BA1 /* AppDelegate.swift in Sources */,
+				DFFF0DC7258AEC04008B3BA1 /* Styler.swift in Sources */,
 				DFFF0DBA25884C55008B3BA1 /* Venue.swift in Sources */,
 				DFFF0DBD25886504008B3BA1 /* Globals.swift in Sources */,
+				DFFF0DC3258AD98E008B3BA1 /* VenueDetailVC.swift in Sources */,
 				DFFF0DB625883793008B3BA1 /* VenueTableViewCell.swift in Sources */,
 				DFFF0DB125880C07008B3BA1 /* VenueFinderSearchView.swift in Sources */,
 				DFFF0D9A2587A1EA008B3BA1 /* SceneDelegate.swift in Sources */,

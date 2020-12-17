@@ -24,7 +24,7 @@ class VenueFinderSearchView: UIView {
     lazy var searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("GO!", for: .normal)
-        button.setTitleColor(.twitterBlue, for: .normal)
+        button.setTitleColor(Styler.Color.twitterBlue, for: .normal)
         button.layer.borderWidth = 1
         return button
     }()

@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 import CoreLocation
 
+// delegate pattern
+protocol VenueSearchDelegate: AnyObject {
+    func didSelectVenue(_ venue: Venue)
+}
+
 class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
@@ -19,6 +24,8 @@ class VenueSearchVC: UIViewController {
     let venueSearchView = VenueFinderSearchView()
     
     let tableView = UITableView()
+    
+    weak var delegate: VenueSearchDelegate?
     
     // datasource
     private var venues: [Venue] = [] {
@@ -148,7 +155,14 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let venue = venues[indexPath.row]
+        let controller = VenueDetailVC()
+        
+        self.delegate = controller
+        self.delegate?.didSelectVenue(venue)
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension VenueSearchVC: CLLocationManagerDelegate {
