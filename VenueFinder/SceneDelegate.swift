@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        //let viewController = VenueSearchVC()
-        let viewController = VenueDetailVC()
+        let viewController = VenueSearchVC()
+        //let viewController = VenueDetailVC()
         window.rootViewController = UINavigationController(rootViewController: viewController)
         window.makeKeyAndVisible()
     }
