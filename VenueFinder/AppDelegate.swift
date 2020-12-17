@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let window = UIWindow(frame: UIScreen.main.bounds)
             self.window = window
             
-            let viewController = VenueSearchVC()
+            //let viewController = VenueSearchVC()
+            let viewController = VenueDetailVC()
             window.rootViewController = UINavigationController(rootViewController: viewController)
         }
 
