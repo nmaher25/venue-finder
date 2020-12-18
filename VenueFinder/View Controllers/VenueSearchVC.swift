@@ -36,7 +36,11 @@ class VenueSearchVC: UIViewController {
         }
     }
     
-    private var venuePhoto: VenuePhoto?
+    private var venuePhoto: VenuePhoto? {
+        didSet {
+            print("DEBUG: venuePhoto set as:\n\(venuePhoto)")
+        }
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -159,6 +163,7 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
         let venue = venues[indexPath.row]
         cell.venue = venue
+        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         return cell
     }

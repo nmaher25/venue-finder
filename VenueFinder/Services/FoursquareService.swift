@@ -30,7 +30,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "20",
+            "limit": "2",
             "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
@@ -59,7 +59,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "20",
+            "limit": "2",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
@@ -131,8 +131,8 @@ class FoursquareService {
             if let data = data, let string = String(data: data, encoding: .utf8) {
                 print(string)
                 let venuePhoto = try! jsonDecoder.decode(PhotoResponse.self, from: data)
-                print("DEBUG: fetchVenueDetails API got results")
-                completion(nil)
+                print("DEBUG: fetchVenuePhotos API got results")
+                completion(venuePhoto.response.photos)
             } else if let error = error {
                 print("DEBUG: fetchVenueDetails ERROR")
                 completion(nil) //add error message handling here
