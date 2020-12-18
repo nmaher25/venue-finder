@@ -102,6 +102,7 @@ class VenueSearchVC: UIViewController {
         view.addSubview(tableView)
         venueSearchView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             venueSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             venueSearchView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -111,7 +112,7 @@ class VenueSearchVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: venueSearchView.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -156,14 +157,19 @@ class VenueSearchVC: UIViewController {
 // Tableview Delegate & Datasource
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        venues.count
+        if venues.count == 0 {
+            tableView.showEmptyState()
+        } else {
+            tableView.hideEmptyState()
+        }
+        
+        return venues.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
         let venue = venues[indexPath.row]
         cell.venue = venue
-        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         return cell
     }
@@ -201,10 +207,24 @@ extension VenueSearchVC {
         }
     }
     
-    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
-        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
-            guard let venuePhoto = venuePhoto else { return }
-            self.venuePhoto = venuePhoto
+    func toggleEmptyStateView() {
+        if venues.count == 0 {
+            tableView.showEmptyState()
+        } else {
+            tableView.hideEmptyState()
         }
+    }
+}
+
+extension UITableView {
+    fileprivate func showEmptyState() {
+        let emptyStateView = VenueSearchEmptyState(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        self.backgroundView = emptyStateView
+        self.separatorStyle = .none
+    }
+    
+    fileprivate func hideEmptyState() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
     }
 }

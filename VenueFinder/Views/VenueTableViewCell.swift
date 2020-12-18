@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class VenueTableViewCell: UITableViewCell {
     var venue: Venue? {
@@ -16,12 +17,16 @@ class VenueTableViewCell: UITableViewCell {
         }
     }
     
-    var venuePhoto: VenuePhoto?
+    var venuePhoto: VenuePhoto? {
+        didSet {
+            configurePhoto()
+        }
+    }
     
     private let venueImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -99,10 +104,13 @@ class VenueTableViewCell: UITableViewCell {
         self.venueAddressLabel.text = nil
         self.venueAddressLabel.textColor = Styler.Color.textLight
         self.venueAddressLabel.font = UIFont.systemFont(ofSize: 16)
+        self.venueImageView.image = nil
     }
     
     func configure() {
         guard let venue = self.venue else { return }
+        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
+        
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
             if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state {
@@ -122,6 +130,22 @@ class VenueTableViewCell: UITableViewCell {
     }
     
     func configurePhoto() {
-        
+        guard let venuePhoto = venuePhoto, let venuePhotoItems = venuePhoto.items else { return }
+        if let venuePhotoInfo = venuePhotoItems.first {
+            guard let url = URL(string: "\(venuePhotoInfo.prefix)\(venuePhotoInfo.width)x\(venuePhotoInfo.height)\(venuePhotoInfo.suffix)") else { return }
+            print("venuePhotos did exist, URL is:\n\(url)")
+            venueImageView.sd_setImage(with: url)
+        } else {
+            DispatchQueue.main.async {
+                self.venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            }
+        }
+    }
+    
+    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
+        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
+            guard let venuePhoto = venuePhoto else { return }
+            self.venuePhoto = venuePhoto
+        }
     }
 }
