@@ -26,6 +26,7 @@
 		DFFF0DC9258B11D3008B3BA1 /* VenueSocialContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DC8258B11D3008B3BA1 /* VenueSocialContainerView.swift */; };
 		DFFF0DCB258C2399008B3BA1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DCA258C2399008B3BA1 /* Utilities.swift */; };
 		DFFF0DCD258C595D008B3BA1 /* VenuePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DCC258C595D008B3BA1 /* VenuePhoto.swift */; };
+		DFFF0DCF258D5FF2008B3BA1 /* VenueSearchEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF0DCE258D5FF2008B3BA1 /* VenueSearchEmptyState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		DFFF0DC8258B11D3008B3BA1 /* VenueSocialContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueSocialContainerView.swift; sourceTree = "<group>"; };
 		DFFF0DCA258C2399008B3BA1 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		DFFF0DCC258C595D008B3BA1 /* VenuePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenuePhoto.swift; sourceTree = "<group>"; };
+		DFFF0DCE258D5FF2008B3BA1 /* VenueSearchEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueSearchEmptyState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				DFFF0DB025880C07008B3BA1 /* VenueFinderSearchView.swift */,
+				DFFF0DCE258D5FF2008B3BA1 /* VenueSearchEmptyState.swift */,
 				DFFF0DC4258ADC9D008B3BA1 /* VenueDetailContainerView.swift */,
 				DFFF0DC8258B11D3008B3BA1 /* VenueSocialContainerView.swift */,
 				DFFF0DB525883793008B3BA1 /* VenueTableViewCell.swift */,
@@ -283,6 +286,7 @@
 			files = (
 				DFFF0D9C2587A1EA008B3BA1 /* VenueSearchVC.swift in Sources */,
 				DFFF0DC5258ADC9D008B3BA1 /* VenueDetailContainerView.swift in Sources */,
+				DFFF0DCF258D5FF2008B3BA1 /* VenueSearchEmptyState.swift in Sources */,
 				DFFF0DC125886759008B3BA1 /* URL+Helpers.swift in Sources */,
 				DFFF0DCB258C2399008B3BA1 /* Utilities.swift in Sources */,
 				DFFF0DC9258B11D3008B3BA1 /* VenueSocialContainerView.swift in Sources */,

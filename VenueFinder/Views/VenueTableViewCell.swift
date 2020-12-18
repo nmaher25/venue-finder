@@ -26,7 +26,7 @@ class VenueTableViewCell: UITableViewCell {
     private let venueImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -136,7 +136,9 @@ class VenueTableViewCell: UITableViewCell {
             print("venuePhotos did exist, URL is:\n\(url)")
             venueImageView.sd_setImage(with: url)
         } else {
-            venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            DispatchQueue.main.async {
+                self.venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            }
         }
     }
     
