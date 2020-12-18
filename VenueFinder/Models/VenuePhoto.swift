@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct PhotoResponse {
+struct PhotoResponse: Codable {
     let response: PhotosObject
     
-    struct PhotosObject {
+    struct PhotosObject: Codable {
         let photos: VenuePhoto
     }
 }
 
-struct VenuePhoto {
+struct VenuePhoto: Codable {
     let count: Int
     let items: [PhotoInfo]?
     
-    struct PhotoInfo {
+    struct PhotoInfo: Codable {
         let id: String
         let prefix: String
         let suffix: String

@@ -109,4 +109,32 @@ class FoursquareService {
         }
         task.resume()
     }
+    
+    public func fetchVenuePhotos(forVenueId venueId: String,
+                                 completion: @escaping(VenuePhoto?) -> Void) {
+        let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/\(venueId)/photos")!
+        let queryParams: [String: String] = [
+            "client_id": "\(FOURSQUARE_CLIENT_ID)",
+            "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
+            "v": "\(versionDate)"
+        ]
+        
+        let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+        let url = baseUrl.withQueries(queryParams)!
+        let task = urlSession.dataTask(with: url) { (data, response, error) in
+            let jsonDecoder = JSONDecoder()
+            
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                print(string)
+                let venuePhoto = try! jsonDecoder.decode(PhotoResponse.self, from: data)
+                print("DEBUG: fetchVenueDetails API got results")
+                completion(nil)
+            } else if let error = error {
+                print("DEBUG: fetchVenueDetails ERROR")
+                completion(nil) //add error message handling here
+            }
+            
+        }
+        task.resume()
+    }
 }

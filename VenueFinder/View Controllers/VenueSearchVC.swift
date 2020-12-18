@@ -36,6 +36,8 @@ class VenueSearchVC: UIViewController {
         }
     }
     
+    private var venuePhoto: VenuePhoto?
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         tableView.delegate = self
@@ -181,7 +183,6 @@ extension VenueSearchVC: CLLocationManagerDelegate {
 // Helpers
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
-        
         FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
             guard let venues = venues else { return }
             self.venues = venues
@@ -192,6 +193,13 @@ extension VenueSearchVC {
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
             guard let venues = venues else { return }
             self.venues = venues
+        }
+    }
+    
+    func fetchVenuePhotos(forVenueId venueId: String) {
+        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId) { (venuePhoto) in
+            guard let venuePhoto = venuePhoto else { return }
+            self.venuePhoto = venuePhoto
         }
     }
 }

@@ -16,6 +16,8 @@ class VenueTableViewCell: UITableViewCell {
         }
     }
     
+    var venuePhoto: VenuePhoto?
+    
     private let venueImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
@@ -117,5 +119,9 @@ class VenueTableViewCell: UITableViewCell {
                 self.venueDistanceLabel.isHidden = true
             }
         }
+    }
+    
+    func configurePhoto() {
+        
     }
 }
