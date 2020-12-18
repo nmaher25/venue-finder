@@ -18,6 +18,8 @@ class VenueDetailVC: UIViewController {
         }
     }
     
+    private var venuePhoto: VenuePhoto?
+    
     let venueDetailImage = UIImageView()
     let venueDetailContainer = VenueDetailContainerView()
     let venueSocialContainer = VenueSocialContainerView()
@@ -32,14 +34,17 @@ class VenueDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = Styler.Color.darkBlue
         venueDetailImage.backgroundColor = .lightGray
+        
+        navigationController?.navigationBar.tintColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func configureUI() {
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         view.addSubview(venueDetailContainer)
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
         

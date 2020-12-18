@@ -41,7 +41,6 @@ class VenueTableViewCell: UITableViewCell {
         label.textColor = Styler.Color.textNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        //label.text = "Venue Name"
         
         return label
     }()
@@ -52,7 +51,6 @@ class VenueTableViewCell: UITableViewCell {
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        //label.text = "123 Main St."
         
         return label
     }()
@@ -61,7 +59,6 @@ class VenueTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = Styler.Color.textLight
-        //label.text = "XX mi"
         
         return label
     }()
@@ -83,9 +80,7 @@ class VenueTableViewCell: UITableViewCell {
             self.addSubview(verticalStack)
             verticalStack.translatesAutoresizingMaskIntoConstraints = false
             verticalStack.leftAnchor.constraint(equalTo: self.venueImageView.rightAnchor, constant: 10).isActive = true
-            //verticalStack.centerYAnchor.constraint(equalTo: self.venueImageView.centerYAnchor).isActive = true
             verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-            //verticalStack.rightAnchor.constraint(equalTo: self.centerXAnchor, constant: self.frame.width/4).isActive = true
             verticalStack.widthAnchor.constraint(equalToConstant: self.frame.width*0.6).isActive = true
             
             self.addSubview(self.venueDistanceLabel)
