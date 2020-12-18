@@ -68,7 +68,9 @@ class VenueDetailContainerView: UIScrollView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .cyan
+        backgroundColor = .white
+        layer.borderColor = UIColor.black.cgColor
+        layer.borderWidth = 1
         
         configureUI()
     }

@@ -37,7 +37,7 @@ class VenueDetailVC: UIViewController {
         view.backgroundColor = Styler.Color.darkBlue
         venueDetailImage.backgroundColor = .lightGray
         
-        navigationController?.navigationBar.tintColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -63,7 +63,10 @@ class VenueDetailVC: UIViewController {
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
-        
+        venueDetailImage.clipsToBounds = true
+        venueDetailImage.layer.cornerRadius = 5
+        venueDetailImage.layer.borderColor = UIColor.black.cgColor
+        venueDetailImage.layer.borderWidth = 2
         venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         venueDetailImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
