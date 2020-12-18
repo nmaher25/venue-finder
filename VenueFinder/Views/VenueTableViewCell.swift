@@ -104,6 +104,7 @@ class VenueTableViewCell: UITableViewCell {
         self.venueAddressLabel.text = nil
         self.venueAddressLabel.textColor = Styler.Color.textLight
         self.venueAddressLabel.font = UIFont.systemFont(ofSize: 16)
+        self.venueImageView.image = nil
     }
     
     func configure() {
@@ -134,6 +135,8 @@ class VenueTableViewCell: UITableViewCell {
             guard let url = URL(string: "\(venuePhotoInfo.prefix)\(venuePhotoInfo.width)x\(venuePhotoInfo.height)\(venuePhotoInfo.suffix)") else { return }
             print("venuePhotos did exist, URL is:\n\(url)")
             venueImageView.sd_setImage(with: url)
+        } else {
+            venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         }
     }
     
