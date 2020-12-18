@@ -34,26 +34,22 @@ class VenueFinderSearchView: UIView {
         return textField
     }()
     
-    
-    
-    /*
-    lazy var locationTextFieldView: UIView = {
-        let view = UIView()
-        
-        return view
-    }()
-    
-    lazy var venueTextFieldView: UIView = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "Whatcha lookin' for?"
-        return searchBar
-    }()*/
-    
     lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("GO!", for: .normal)
-        button.setTitleColor(Styler.Color.twitterBlue, for: .normal)
+        let buttonAttributedString = NSAttributedString(string: "GO!", attributes: [
+            NSAttributedString.Key.foregroundColor: Styler.Color.successGreen,
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)
+        ])
+        //button.setTitle("GO!", for: .normal)
+        //button.setTitleColor(Styler.Color.successGreen, for: .normal)
+        button.setAttributedTitle(buttonAttributedString, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        button.layer.cornerRadius = 70 / 2
         button.layer.borderWidth = 1
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.layer.borderColor = UIColor.lightGray.cgColor
         return button
     }()
     
@@ -68,10 +64,10 @@ class VenueFinderSearchView: UIView {
     
     
     func configureUI() {
-        self.addSubview(locationTextFieldView)
-        self.addSubview(venueTextFieldView)
-        self.addSubview(searchButton)
-        self.backgroundColor = .systemPink
+        addSubview(locationTextFieldView)
+        addSubview(venueTextFieldView)
+        addSubview(searchButton)
+        backgroundColor = Styler.Color.darkBlue
         
         locationTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         venueTextFieldView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,11 +84,8 @@ class VenueFinderSearchView: UIView {
             venueTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
             venueTextFieldView.heightAnchor.constraint(equalToConstant: 30),
             
-            searchButton.leftAnchor.constraint(equalTo: locationTextFieldView.rightAnchor, constant: 10),
             searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-            searchButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
-            
+            searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
         ])
     }
     

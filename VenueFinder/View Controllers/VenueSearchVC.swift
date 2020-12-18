@@ -49,13 +49,22 @@ class VenueSearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let locationBarButtonItem = UIBarButtonItem(image: UIImage(named: "location.fill"), style: .plain, target: self, action: #selector(locationBarButtonItemTapped))
+        let locationButtonImage = UIImage(named: "location.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        let locationBarButtonItem = UIBarButtonItem(image: locationButtonImage, style: .plain, target: self, action: #selector(locationBarButtonItemTapped))
         self.navigationItem.rightBarButtonItem = locationBarButtonItem
         
         locationManager.delegate = self
         
-        view.backgroundColor = .green
-        tableView.backgroundColor = .orange
+        view.backgroundColor = Styler.Color.darkBlue
+        tableView.backgroundColor = .white
+        
+        navigationItem.title = "Venue Finder"
+        navigationController?.navigationBar.tintColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         configureUI()
         venueSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
@@ -82,9 +91,6 @@ class VenueSearchVC: UIViewController {
     }
     
     func configureUI() {
-        navigationItem.title = "Venue Finder"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         
         view.addSubview(venueSearchView)
         view.addSubview(tableView)
