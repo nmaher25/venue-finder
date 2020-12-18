@@ -196,8 +196,8 @@ extension VenueSearchVC {
         }
     }
     
-    func fetchVenuePhotos(forVenueId venueId: String) {
-        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId) { (venuePhoto) in
+    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
+        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
             guard let venuePhoto = venuePhoto else { return }
             self.venuePhoto = venuePhoto
         }

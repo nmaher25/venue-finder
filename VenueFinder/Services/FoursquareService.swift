@@ -111,9 +111,13 @@ class FoursquareService {
     }
     
     public func fetchVenuePhotos(forVenueId venueId: String,
+                                 withLimit limit: Int,
+                                 withOffset offset: Int,
                                  completion: @escaping(VenuePhoto?) -> Void) {
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/\(venueId)/photos")!
         let queryParams: [String: String] = [
+            "limit": "\(limit)",
+            "offset": "\(offset)",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
