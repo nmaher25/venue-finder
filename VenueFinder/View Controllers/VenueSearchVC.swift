@@ -36,6 +36,12 @@ class VenueSearchVC: UIViewController {
         }
     }
     
+    private var venuePhoto: VenuePhoto? {
+        didSet {
+            print("DEBUG: venuePhoto set as:\n\(venuePhoto)")
+        }
+    }
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         tableView.delegate = self
@@ -157,6 +163,7 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
         let venue = venues[indexPath.row]
         cell.venue = venue
+        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         return cell
     }
@@ -181,7 +188,6 @@ extension VenueSearchVC: CLLocationManagerDelegate {
 // Helpers
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
-        
         FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
             guard let venues = venues else { return }
             self.venues = venues
@@ -192,6 +198,13 @@ extension VenueSearchVC {
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
             guard let venues = venues else { return }
             self.venues = venues
+        }
+    }
+    
+    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
+        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
+            guard let venuePhoto = venuePhoto else { return }
+            self.venuePhoto = venuePhoto
         }
     }
 }
