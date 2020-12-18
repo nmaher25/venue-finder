@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class VenueTableViewCell: UITableViewCell {
     var venue: Venue? {
@@ -16,7 +17,11 @@ class VenueTableViewCell: UITableViewCell {
         }
     }
     
-    var venuePhoto: VenuePhoto?
+    var venuePhoto: VenuePhoto? {
+        didSet {
+            configurePhoto()
+        }
+    }
     
     private let venueImageView: UIImageView = {
         let imageView = UIImageView()
@@ -103,6 +108,8 @@ class VenueTableViewCell: UITableViewCell {
     
     func configure() {
         guard let venue = self.venue else { return }
+        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
+        
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
             if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state {
@@ -122,6 +129,18 @@ class VenueTableViewCell: UITableViewCell {
     }
     
     func configurePhoto() {
-        
+        guard let venuePhoto = venuePhoto, let venuePhotoItems = venuePhoto.items else { return }
+        if let venuePhotoInfo = venuePhotoItems.first {
+            guard let url = URL(string: "\(venuePhotoInfo.prefix)\(venuePhotoInfo.width)x\(venuePhotoInfo.height)\(venuePhotoInfo.suffix)") else { return }
+            print("venuePhotos did exist, URL is:\n\(url)")
+            venueImageView.sd_setImage(with: url)
+        }
+    }
+    
+    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
+        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
+            guard let venuePhoto = venuePhoto else { return }
+            self.venuePhoto = venuePhoto
+        }
     }
 }

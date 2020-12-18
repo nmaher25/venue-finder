@@ -163,7 +163,6 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VenueTableViewCell
         let venue = venues[indexPath.row]
         cell.venue = venue
-        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         return cell
     }
@@ -198,13 +197,6 @@ extension VenueSearchVC {
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
             guard let venues = venues else { return }
             self.venues = venues
-        }
-    }
-    
-    func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
-        FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
-            guard let venuePhoto = venuePhoto else { return }
-            self.venuePhoto = venuePhoto
         }
     }
 }
