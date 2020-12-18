@@ -35,7 +35,7 @@ struct Venue: Codable {
         let address: String?
         let lat: Double
         let lng: Double
-        let distance: Double?
+        let distance: Double? //meters
         let postalCode: String?
         let cc: String?
         let city: String?

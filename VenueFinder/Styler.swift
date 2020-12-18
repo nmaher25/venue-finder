@@ -11,7 +11,9 @@ import UIKit
 
 struct Styler {
     struct Color {
-        static let twitterBlue = UIColor.rgb(red: 29, green: 161, blue: 242)
+        static let darkBlue = UIColor.rgb(red: 0, green: 9, blue: 138)
+        static let successGreen = UIColor.rgb(red: 34, green: 242, blue: 34)
+        static let errorRed = UIColor.rgb(red: 232, green: 41, blue: 12)
         
         static let textNormal = UIColor.black
         static let textLight = UIColor.rgb(red: 128, green: 128, blue: 128)
