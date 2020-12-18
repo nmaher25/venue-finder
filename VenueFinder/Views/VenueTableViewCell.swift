@@ -94,14 +94,17 @@ class VenueTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.venueAddressLabel.text = nil
+        self.venueAddressLabel.textColor = Styler.Color.textLight
+        self.venueAddressLabel.font = UIFont.systemFont(ofSize: 16)
     }
     
     func configure() {
         guard let venue = self.venue else { return }
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
-            if let formattedAddress = venue.location.formattedAddress {
-                self.venueAddressLabel.text = "\(formattedAddress[0])\n\(formattedAddress[1])"
+            if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state {
+                self.venueAddressLabel.text = "\(address)\n\(city), \(state)"
             } else {
                 self.venueAddressLabel.text = "Could not find address"
                 self.venueAddressLabel.font = UIFont.systemFont(ofSize: 10)
@@ -112,7 +115,6 @@ class VenueTableViewCell: UITableViewCell {
                 self.venueDistanceLabel.text = "\(distance)"
             } else {
                 self.venueDistanceLabel.isHidden = true
-            
             }
         }
     }
