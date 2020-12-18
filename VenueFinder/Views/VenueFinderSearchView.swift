@@ -36,12 +36,11 @@ class VenueFinderSearchView: UIView {
     
     lazy var searchButton: UIButton = {
         let button = UIButton()
+        
         let buttonAttributedString = NSAttributedString(string: "GO!", attributes: [
-            NSAttributedString.Key.foregroundColor: Styler.Color.successGreen,
+            NSAttributedString.Key.foregroundColor: Styler.Color.textNormal,
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)
         ])
-        //button.setTitle("GO!", for: .normal)
-        //button.setTitleColor(Styler.Color.successGreen, for: .normal)
         button.setAttributedTitle(buttonAttributedString, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -50,6 +49,7 @@ class VenueFinderSearchView: UIView {
         button.layer.borderWidth = 1
         button.layer.backgroundColor = UIColor.white.cgColor
         button.layer.borderColor = UIColor.lightGray.cgColor
+        
         return button
     }()
     

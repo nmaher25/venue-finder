@@ -91,7 +91,7 @@ class VenueSearchVC: UIViewController {
     }
     
     func configureUI() {
-        
+        tableView.rowHeight = 100
         view.addSubview(venueSearchView)
         view.addSubview(tableView)
         venueSearchView.translatesAutoresizingMaskIntoConstraints = false
@@ -162,6 +162,7 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let venue = venues[indexPath.row]
         let controller = VenueDetailVC()
         

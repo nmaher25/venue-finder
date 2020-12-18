@@ -22,14 +22,18 @@ class VenueTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        imageView.layer.cornerRadius = 70 / 2
         return imageView
     }()
     
     private let venueNameLabel: UILabel = {
         let label = UILabel()
-        
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = Styler.Color.textNormal
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         //label.text = "Venue Name"
         
         return label
@@ -37,7 +41,10 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueAddressLabel: UILabel = {
         let label = UILabel()
-        
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = Styler.Color.textLight
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         //label.text = "123 Main St."
         
         return label
@@ -45,7 +52,8 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueDistanceLabel: UILabel = {
         let label = UILabel()
-        
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = Styler.Color.textLight
         //label.text = "XX mi"
         
         return label
@@ -68,12 +76,15 @@ class VenueTableViewCell: UITableViewCell {
             self.addSubview(verticalStack)
             verticalStack.translatesAutoresizingMaskIntoConstraints = false
             verticalStack.leftAnchor.constraint(equalTo: self.venueImageView.rightAnchor, constant: 10).isActive = true
-            verticalStack.centerYAnchor.constraint(equalTo: self.venueImageView.centerYAnchor).isActive = true
+            //verticalStack.centerYAnchor.constraint(equalTo: self.venueImageView.centerYAnchor).isActive = true
+            verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+            //verticalStack.rightAnchor.constraint(equalTo: self.centerXAnchor, constant: self.frame.width/4).isActive = true
+            verticalStack.widthAnchor.constraint(equalToConstant: self.frame.width*0.6).isActive = true
             
             self.addSubview(self.venueDistanceLabel)
             self.venueDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
-            self.venueDistanceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40).isActive = true
-            self.venueDistanceLabel.centerYAnchor.constraint(equalTo: verticalStack.centerYAnchor).isActive = true
+            self.venueDistanceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
+            self.venueDistanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         }
     }
     
@@ -89,7 +100,13 @@ class VenueTableViewCell: UITableViewCell {
         guard let venue = self.venue else { return }
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
-            self.venueAddressLabel.text = venue.location.address ?? "Could not retrieve address"
+            if let formattedAddress = venue.location.formattedAddress {
+                self.venueAddressLabel.text = "\(formattedAddress[0])\n\(formattedAddress[1])"
+            } else {
+                self.venueAddressLabel.text = "Could not find address"
+                self.venueAddressLabel.font = UIFont.systemFont(ofSize: 10)
+                self.venueAddressLabel.textColor = Styler.Color.errorRed
+            }
             if let distance = venue.location.distance {
                 self.venueDistanceLabel.isHidden = false
                 self.venueDistanceLabel.text = "\(distance)"
