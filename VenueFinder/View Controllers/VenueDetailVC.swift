@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 class VenueDetailVC: UIViewController {
     private var venue: Venue? {
@@ -63,18 +64,28 @@ class VenueDetailVC: UIViewController {
     // MARK: - Selectors
     @objc func phoneButtonTapped() {
         print("Handle phone tapped")
-        guard let venue = venue, let venueContact = venue.contact, let venuePhone = venueContact.phone else { return }
-        if let phoneUrl = URL(string: "tel://\(venuePhone)") {
+        if let venue = venue, let venueContact = venue.contact, let venuePhone = venueContact.phone {
+            if let phoneUrl = URL(string: "tel://\(venuePhone)") {
 
-          let application:UIApplication = UIApplication.shared
-          if (application.canOpenURL(phoneUrl)) {
-              application.open(phoneUrl, options: [:], completionHandler: nil)
-          }
+                let application:UIApplication = UIApplication.shared
+                if (application.canOpenURL(phoneUrl)) {
+                    application.open(phoneUrl, options: [:], completionHandler: nil)
+                }
+            }
         }
     }
     
     @objc func websiteButtonTapped() {
         print("Handle website button tapped")
+        if let venue = venue, let venueUrl = venue.url {
+            if let url = URL(string: venueUrl) {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
     }
     
     @objc func twitterButtonTapped() {
@@ -172,8 +183,6 @@ class VenueDetailVC: UIViewController {
 
 extension VenueDetailVC: VenueSearchDelegate {
     func didSelectVenue(_ venue: Venue) {
-        print("DEBUG: didSelectVenue called from VenueDetailVC \nnetwork against the venue details endpoint using the passed in venue's ID")
-        print("Venue id passed in is \(venue.id)")
         fetchVenueDetails(forVenue: venue)
     }
     
