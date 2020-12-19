@@ -52,13 +52,13 @@ class VenueDetailVC: UIViewController {
         
         
         /***** for use when over api limit *****/
-        let jsonDecoder = JSONDecoder()
+        /*let jsonDecoder = JSONDecoder()
         if let data = dummyVenueDetailData {
             let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
             self.venue = venue.response.venue
         } else {
             print("bad")
-        }
+        }*/
     }
     
     // MARK: - Selectors
