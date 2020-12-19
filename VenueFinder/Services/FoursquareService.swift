@@ -94,7 +94,8 @@ class FoursquareService {
     }
     
     public func fetchVenueDetails(forVenueId venueId: String,
-                                  completion: @escaping(Venue?) -> Void) {
+                                  completion: @escaping(Venue?) -> Void,
+                                  errorCompletion: @escaping(ErrorResponse?) -> Void) {
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/\(venueId)")!
         let queryParams: [String: String] = [
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
@@ -109,11 +110,14 @@ class FoursquareService {
             
             if let data = data, let string = String(data: data, encoding: .utf8) {
                 print(string)
-                let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
-                print("DEBUG: fetchVenueDetails API got results")
-                completion(venue.response.venue)
-            } else if let error = error {
-                print("DEBUG: fetchVenueDetails ERROR")
+                if let venue = try? jsonDecoder.decode(ResponseDetail.self, from: data) {
+                    completion(venue.response.venue)
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
+                }
+            } else {
                 completion(nil) //add error message handling here
             }
             

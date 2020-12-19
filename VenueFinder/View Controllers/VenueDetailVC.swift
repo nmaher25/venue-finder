@@ -122,6 +122,22 @@ class VenueDetailVC: UIViewController {
         }
     }
     
+    func presentAlertForDetailError(forVenueError venueError: ErrorResponse.VenueError) {
+        let alertCopy: String
+        switch venueError.code {
+        case 403, 429: //hourly/daily rate limit exceeded
+            alertCopy = "Daily rate limit reached for this API - hire me to see more!"
+        case 400:
+            alertCopy = "Sorry, we could not retrieve any details for this venue."
+        default:
+            alertCopy = "Sorry, there was an issue with your request. Please try again in a few seconds."
+        }
+        let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     func configureUI() {
         view.addSubview(venueDetailContainer)
@@ -211,8 +227,18 @@ extension VenueDetailVC: VenueSearchDelegate {
 
 extension VenueDetailVC {
     func fetchVenueDetails(forVenue venue: Venue) {
+        FoursquareService.shared.fetchVenueDetails(forVenueId: venue.id, completion: { (venue) in
+            self.venue = venue
+        }) { (detailError) in
+            guard let detailError = detailError else { return }
+            DispatchQueue.main.async {
+                self.presentAlertForDetailError(forVenueError: detailError.meta)
+            }
+        }
+        
+        /*
         FoursquareService.shared.fetchVenueDetails(forVenueId: venue.id) { (venue) in
             self.venue = venue
-        }
+        }*/
     }
 }

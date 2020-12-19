@@ -187,7 +187,7 @@ class VenueSearchVC: UIViewController {
         let alertCopy: String
         switch venueError.code {
         case 403, 429: //hourly/daily rate limit exceeded
-            alertCopy = "Hire me to see more!"
+            alertCopy = "Daily rate limit reached for this API - Hire me to see more!"
         case 400: //geocode errors, etc
             alertCopy = "Your location could not found, or no locations with your query were found. Try searching again!"
         default:
