@@ -90,14 +90,41 @@ class VenueDetailVC: UIViewController {
     
     @objc func twitterButtonTapped() {
         print("Handle twitter button tapped")
+        if let venue = venue, let venueContact = venue.contact, let venueTwitter = venueContact.twitter {
+            if let url = URL(string: "https://www.twitter.com/\(venueTwitter)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
     }
     
     @objc func instagramButtonTapped() {
         print("Handle instagram button tapped")
+        if let venue = venue, let venueContact = venue.contact, let venueInstagram = venueContact.instagram {
+            if let url = URL(string: "https://www.instagram.com/\(venueInstagram)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
     }
     
     @objc func facebookButtonTapped() {
         print("Handle facebook button tapped")
+        if let venue = venue, let venueContact = venue.contact, let venueFacebook = venueContact.facebook {
+            if let url = URL(string: "https://www.facebook.com/\(venueFacebook)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
     }
     
     
