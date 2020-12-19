@@ -37,12 +37,6 @@ class VenueSearchVC: UIViewController {
         }
     }
     
-    private var venuePhoto: VenuePhoto? {
-        didSet {
-            print("DEBUG: venuePhoto set as:\n\(venuePhoto)")
-        }
-    }
-    
     init() {
         super.init(nibName: nil, bundle: nil)
         tableView.delegate = self
@@ -62,13 +56,13 @@ class VenueSearchVC: UIViewController {
         
         locationManager.delegate = self
         
-        view.backgroundColor = Styler.Color.darkBlue
+        view.backgroundColor = Styler.Color.pinkMain
         tableView.backgroundColor = .white
         
         navigationItem.title = "Venue Finder"
-        navigationController?.navigationBar.tintColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.tintColor = Styler.Color.pinkMain
         navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.backgroundColor = Styler.Color.pinkMain
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
         

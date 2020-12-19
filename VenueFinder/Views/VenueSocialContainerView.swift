@@ -72,8 +72,8 @@ class VenueSocialContainerView: UIScrollView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        layer.borderColor = UIColor.lightGray.cgColor
-        layer.borderWidth = 1
+        layer.borderColor = Styler.Color.lightPinkDetail.cgColor
+        layer.borderWidth = 2
         layer.cornerRadius = 10
         
         configureUI()

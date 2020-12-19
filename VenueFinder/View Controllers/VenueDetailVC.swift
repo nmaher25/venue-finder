@@ -41,14 +41,14 @@ class VenueDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Styler.Color.darkBlue
+        view.backgroundColor = Styler.Color.pinkMain
         venueDetailImage.backgroundColor = .lightGray
         venueDetailImage.contentMode = .scaleAspectFill
         venueDetailImage.clipsToBounds = true
         
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.backgroundColor = Styler.Color.pinkMain
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -166,7 +166,7 @@ class VenueDetailVC: UIViewController {
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
         venueDetailImage.clipsToBounds = true
         venueDetailImage.layer.cornerRadius = 10
-        venueDetailImage.layer.borderColor = UIColor.black.cgColor
+        venueDetailImage.layer.borderColor = Styler.Color.lightPinkDetail.cgColor
         venueDetailImage.layer.borderWidth = 2
         venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
