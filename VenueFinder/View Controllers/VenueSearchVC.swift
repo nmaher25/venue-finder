@@ -240,10 +240,15 @@ extension VenueSearchVC: CLLocationManagerDelegate {
 // Helpers
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
-        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
+        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
             print("fetchVenues at lat/long got results")
             self.venues = venues
+        }) { (error) in
+            guard let error = error else { return }
+            DispatchQueue.main.async {
+                self.presentAlertForSearchError(forVenueError: error.meta)
+            }
         }
     }
     
@@ -259,13 +264,6 @@ extension VenueSearchVC {
                 self.presentAlertForSearchError(forVenueError: error.meta)
             }
         }
-        
-        /*
-        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues, error) in
-            guard let venues = venues else { return }
-            print("venues near were valid")
-            self.venues = venues
-        }*/
     }
     
     func toggleEmptyStateView() {

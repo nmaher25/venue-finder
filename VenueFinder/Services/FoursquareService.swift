@@ -8,8 +8,9 @@
 
 import Foundation
 
-// Singleton
 class FoursquareService {
+    
+    // Singleton declaration
     static let shared = FoursquareService()
     
     private init() { }
@@ -24,7 +25,8 @@ class FoursquareService {
     public func fetchVenues(atLatitude lat: Double,
                           atLongitude long: Double,
                           forQuery query: String,
-                          completion: @escaping([Venue]?) -> Void) {
+                          completion: @escaping([Venue]?) -> Void,
+                          errorCompletion: @escaping(ErrorResponse?) -> Void) {
         
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
@@ -43,9 +45,13 @@ class FoursquareService {
             if let data = data {
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
                     completion(venues.response.venues)
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
                 }
-            } else if let error = error {
-                completion(nil) //add error message handling here
+            } else {
+                completion(nil)
             }
             
         }
