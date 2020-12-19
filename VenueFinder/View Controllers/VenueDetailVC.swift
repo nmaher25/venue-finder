@@ -26,6 +26,12 @@ class VenueDetailVC: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        venueDetailContainer.venuePhoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        venueDetailContainer.venueWebsiteButton.addTarget(self, action: #selector(websiteButtonTapped), for: .touchUpInside)
+        
+        venueSocialContainer.twitterButton.addTarget(self, action: #selector(twitterButtonTapped), for: .touchUpInside)
+        venueSocialContainer.instagramButton.addTarget(self, action: #selector(instagramButtonTapped), for: .touchUpInside)
+        venueSocialContainer.facebookButton.addTarget(self, action: #selector(facebookButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -53,6 +59,36 @@ class VenueDetailVC: UIViewController {
             print("bad")
         }
     }
+    
+    // MARK: - Selectors
+    @objc func phoneButtonTapped() {
+        print("Handle phone tapped")
+        guard let venue = venue, let venueContact = venue.contact, let venuePhone = venueContact.phone else { return }
+        if let phoneUrl = URL(string: "tel://\(venuePhone)") {
+
+          let application:UIApplication = UIApplication.shared
+          if (application.canOpenURL(phoneUrl)) {
+              application.open(phoneUrl, options: [:], completionHandler: nil)
+          }
+        }
+    }
+    
+    @objc func websiteButtonTapped() {
+        print("Handle website button tapped")
+    }
+    
+    @objc func twitterButtonTapped() {
+        print("Handle twitter button tapped")
+    }
+    
+    @objc func instagramButtonTapped() {
+        print("Handle instagram button tapped")
+    }
+    
+    @objc func facebookButtonTapped() {
+        print("Handle facebook button tapped")
+    }
+    
     
     func configureUI() {
         view.addSubview(venueDetailContainer)

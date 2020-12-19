@@ -57,14 +57,14 @@ class VenueDetailContainerView: UIScrollView {
     
     lazy var venuePhoneButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("(609) 332-7595", for: .normal)
+        //button.setTitle("(609) 332-7595", for: .normal)
         return button
     }()
     
     lazy var venueWebsiteButton: UIButton = {
         let button = UIButton(type: .system)
         
-        button.setTitle("www.google.com", for: .normal)
+        //button.setTitle("www.google.com", for: .normal)
         
         return button
     }()
