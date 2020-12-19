@@ -21,10 +21,10 @@ class Utilities {
         textField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         let dividerView = UIView()
-        dividerView.backgroundColor = .white
+        dividerView.backgroundColor = Styler.Color.lightPinkDetail
         view.addSubview(dividerView)
         dividerView.translatesAutoresizingMaskIntoConstraints = false
-        dividerView.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
+        dividerView.heightAnchor.constraint(equalToConstant: 1.25).isActive = true
         dividerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
         dividerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         dividerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
@@ -36,7 +36,7 @@ class Utilities {
         let textField = UITextField()
         textField.textColor = .white
         textField.font = UIFont.systemFont(ofSize: 18)
-        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: Styler.Color.verylightPinkDetail])
         
         return textField
     }

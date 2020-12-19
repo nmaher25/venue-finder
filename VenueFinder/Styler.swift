@@ -11,7 +11,6 @@ import UIKit
 
 struct Styler {
     struct Color {
-        static let darkBlue = UIColor.rgb(red: 0, green: 9, blue: 138)
         static let successGreen = UIColor.rgb(red: 34, green: 242, blue: 34)
         static let errorRed = UIColor.rgb(red: 232, green: 41, blue: 12)
         

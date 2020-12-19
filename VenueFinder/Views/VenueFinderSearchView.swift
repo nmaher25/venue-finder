@@ -48,7 +48,7 @@ class VenueFinderSearchView: UIView {
         button.layer.cornerRadius = 70 / 2
         button.layer.borderWidth = 1
         button.layer.backgroundColor = UIColor.white.cgColor
-        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderColor = Styler.Color.lightPinkDetail.cgColor
         
         return button
     }()
@@ -67,7 +67,7 @@ class VenueFinderSearchView: UIView {
         addSubview(locationTextFieldView)
         addSubview(venueTextFieldView)
         addSubview(searchButton)
-        backgroundColor = Styler.Color.darkBlue
+        backgroundColor = Styler.Color.pinkMain
         
         locationTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         venueTextFieldView.translatesAutoresizingMaskIntoConstraints = false

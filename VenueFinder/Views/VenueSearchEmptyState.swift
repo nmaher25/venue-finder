@@ -56,7 +56,7 @@ class VenueSearchEmptyState: UIView {
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        stack.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 40).isActive = true
+        stack.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -40).isActive = true
         stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
         stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
     }
