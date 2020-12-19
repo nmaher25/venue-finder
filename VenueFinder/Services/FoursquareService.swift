@@ -22,6 +22,8 @@ class FoursquareService {
         return dateFormatter.string(from: date)
     }()
     
+    var imageUrlCache: [String: URL] = [:]
+    
     public func fetchVenues(atLatitude lat: Double,
                           atLongitude long: Double,
                           forQuery query: String,
@@ -66,7 +68,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "2",
+            "limit": "1",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
