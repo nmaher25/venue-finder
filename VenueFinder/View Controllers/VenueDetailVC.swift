@@ -19,7 +19,7 @@ class VenueDetailVC: UIViewController {
         }
     }
     
-    private var venuePhoto: VenuePhoto?
+    //private var venuePhoto: VenuePhoto?
     
     let venueDetailImage = UIImageView()
     let venueDetailContainer = VenueDetailContainerView()
@@ -43,6 +43,8 @@ class VenueDetailVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Styler.Color.darkBlue
         venueDetailImage.backgroundColor = .lightGray
+        venueDetailImage.contentMode = .scaleAspectFill
+        venueDetailImage.clipsToBounds = true
         
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barStyle = .black
@@ -173,6 +175,12 @@ class VenueDetailVC: UIViewController {
         
         if let venue = venue {
             navigationItem.title = venue.name
+            if let photoUrl = FoursquareService.shared.imageUrlCache[venue.id] {
+                venueDetailImage.sd_setImage(with: photoUrl)
+            } else {
+                venueDetailImage.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            }
+            
             
             if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state, let zipcode = venue.location.postalCode {
                 venueDetailContainer.venueStreetAddressBody.text = address
