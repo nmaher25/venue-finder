@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 class VenueDetailVC: UIViewController {
     private var venue: Venue? {
@@ -18,12 +19,20 @@ class VenueDetailVC: UIViewController {
         }
     }
     
+    private var venuePhoto: VenuePhoto?
+    
     let venueDetailImage = UIImageView()
     let venueDetailContainer = VenueDetailContainerView()
     let venueSocialContainer = VenueSocialContainerView()
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        venueDetailContainer.venuePhoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        venueDetailContainer.venueWebsiteButton.addTarget(self, action: #selector(websiteButtonTapped), for: .touchUpInside)
+        
+        venueSocialContainer.twitterButton.addTarget(self, action: #selector(twitterButtonTapped), for: .touchUpInside)
+        venueSocialContainer.instagramButton.addTarget(self, action: #selector(instagramButtonTapped), for: .touchUpInside)
+        venueSocialContainer.facebookButton.addTarget(self, action: #selector(facebookButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -32,33 +41,111 @@ class VenueDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = Styler.Color.darkBlue
         venueDetailImage.backgroundColor = .lightGray
-    }
-    
-    func configureUI() {
         
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        
+        /***** for use when over api limit *****/
+        /*let jsonDecoder = JSONDecoder()
+        if let data = dummyVenueDetailData {
+            let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
+            self.venue = venue.response.venue
+        } else {
+            print("bad")
+        }*/
+    }
+    
+    // MARK: - Selectors
+    @objc func phoneButtonTapped() {
+        if let venue = venue, let venueContact = venue.contact, let venuePhone = venueContact.phone {
+            if let phoneUrl = URL(string: "tel://\(venuePhone)") {
+
+                let application:UIApplication = UIApplication.shared
+                if (application.canOpenURL(phoneUrl)) {
+                    application.open(phoneUrl, options: [:], completionHandler: nil)
+                }
+            }
+        }
+    }
+    
+    @objc func websiteButtonTapped() {
+        if let venue = venue, let venueUrl = venue.url {
+            if let url = URL(string: venueUrl) {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
+    }
+    
+    @objc func twitterButtonTapped() {
+        if let venue = venue, let venueContact = venue.contact, let venueTwitter = venueContact.twitter {
+            if let url = URL(string: "https://www.twitter.com/\(venueTwitter)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
+    }
+    
+    @objc func instagramButtonTapped() {
+        if let venue = venue, let venueContact = venue.contact, let venueInstagram = venueContact.instagram {
+            if let url = URL(string: "https://www.instagram.com/\(venueInstagram)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
+    }
+    
+    @objc func facebookButtonTapped() {
+        if let venue = venue, let venueContact = venue.contact, let venueFacebook = venueContact.facebook {
+            if let url = URL(string: "https://www.facebook.com/\(venueFacebook)") {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let webview = SFSafariViewController(url: url, configuration: config)
+                present(webview, animated: true)
+            }
+        }
+    }
+    
+    
+    func configureUI() {
         view.addSubview(venueDetailContainer)
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        venueDetailContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        venueDetailContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
         venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -2).isActive = true
+        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -5).isActive = true
         venueDetailContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         view.addSubview(venueSocialContainer)
         venueSocialContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        venueSocialContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 2).isActive = true
+        venueSocialContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
+        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 5).isActive = true
         venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
-        
+        venueDetailImage.clipsToBounds = true
+        venueDetailImage.layer.cornerRadius = 10
+        venueDetailImage.layer.borderColor = UIColor.black.cgColor
+        venueDetailImage.layer.borderWidth = 2
         venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         venueDetailImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
@@ -67,10 +154,13 @@ class VenueDetailVC: UIViewController {
         if let venue = venue {
             navigationItem.title = venue.name
             
-            if let formattedAddress = venue.location.formattedAddress {
-                venueDetailContainer.venueAddressBody.text = "\(formattedAddress[0])\n\(formattedAddress[1])\n\(formattedAddress[2])"
+            if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state, let zipcode = venue.location.postalCode {
+                venueDetailContainer.venueStreetAddressBody.text = address
+                venueDetailContainer.venueCityStateBody.text = "\(city), \(state) \(zipcode)"
             } else {
-                venueDetailContainer.venueAddressBody.text = "No address found"
+                venueDetailContainer.venueStreetAddressBody.text = "No address found"
+                venueDetailContainer.venueStreetAddressBody.textColor = Styler.Color.errorRed
+                venueDetailContainer.venueCityStateBody.isHidden = true
             }
             
             if let formattedPhoneNumber = venue.contact?.formattedPhone {
@@ -81,7 +171,7 @@ class VenueDetailVC: UIViewController {
             }
             
             if let website = venue.url {
-                venueDetailContainer.venueWebsiteButton.setTitle(website, for: .normal)
+                venueDetailContainer.venueWebsiteButton.setTitle(venue.name, for: .normal)
             } else {
                 venueDetailContainer.venueWebsiteButton.isEnabled = false
                 venueDetailContainer.venueWebsiteButton.setTitle("No website found", for: .disabled)
@@ -91,21 +181,21 @@ class VenueDetailVC: UIViewController {
                 venueSocialContainer.twitterButton.setTitle("@\(twitter)", for: .normal)
             } else {
                 venueSocialContainer.twitterButton.isEnabled = false
-                venueSocialContainer.twitterButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.twitterButton.setTitle("n/a", for: .disabled)
             }
             
-            if let instagram = venue.contact?.facebook {
+            if let instagram = venue.contact?.instagram {
                 venueSocialContainer.instagramButton.setTitle("@\(instagram)", for: .normal)
             } else {
                 venueSocialContainer.instagramButton.isEnabled = false
-                venueSocialContainer.instagramButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.instagramButton.setTitle("n/a", for: .disabled)
             }
             
             if let facebookUsername = venue.contact?.facebookUsername, let facebookId = venue.contact?.facebook {
                 venueSocialContainer.facebookButton.setTitle("/\(facebookUsername)", for: .normal)
             } else {
                 venueSocialContainer.facebookButton.isEnabled = false
-                venueSocialContainer.facebookButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.facebookButton.setTitle("n/a", for: .disabled)
             }
         }
     }
@@ -113,8 +203,6 @@ class VenueDetailVC: UIViewController {
 
 extension VenueDetailVC: VenueSearchDelegate {
     func didSelectVenue(_ venue: Venue) {
-        print("DEBUG: didSelectVenue called from VenueDetailVC \nnetwork against the venue details endpoint using the passed in venue's ID")
-        print("Venue id passed in is \(venue.id)")
         fetchVenueDetails(forVenue: venue)
     }
     
