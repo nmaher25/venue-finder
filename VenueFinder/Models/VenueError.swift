@@ -15,16 +15,5 @@ struct ErrorResponse: Codable {
         let code: Int
         let errorType: String
         let errorDetail: String
-        /*
-        enum ErrorType: String, Codable {
-            case invalid_auth
-            case param_error
-            case endpoint_error
-            case not_authorized
-            case rate_limit_exceeded
-            case quota_exceeded
-            case deprecated
-            case server_error
-        }*/
     }
 }

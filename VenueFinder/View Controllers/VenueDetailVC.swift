@@ -134,7 +134,11 @@ class VenueDetailVC: UIViewController {
         }
         let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
         
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Back", style: .default, handler: { (alert) -> Void in
+            if let navController = self.navigationController {
+                navController.popViewController(animated: true)
+            }
+        }))
         present(alert, animated: true, completion: nil)
     }
     
