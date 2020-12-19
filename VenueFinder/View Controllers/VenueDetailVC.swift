@@ -42,29 +42,41 @@ class VenueDetailVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = Styler.Color.darkBlue
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        
+        /***** for use when over api limit *****/
+        let jsonDecoder = JSONDecoder()
+        if let data = dummyVenueDetailData {
+            let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
+            self.venue = venue.response.venue
+        } else {
+            print("bad")
+        }
     }
     
     func configureUI() {
         view.addSubview(venueDetailContainer)
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        venueDetailContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        //venueDetailContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        venueDetailContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
         venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -2).isActive = true
+        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -5).isActive = true
         venueDetailContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         view.addSubview(venueSocialContainer)
         venueSocialContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        venueSocialContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 2).isActive = true
+        //venueSocialContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        venueSocialContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
+        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 5).isActive = true
         venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
         venueDetailImage.clipsToBounds = true
-        venueDetailImage.layer.cornerRadius = 5
+        venueDetailImage.layer.cornerRadius = 10
         venueDetailImage.layer.borderColor = UIColor.black.cgColor
         venueDetailImage.layer.borderWidth = 2
         venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
@@ -75,10 +87,13 @@ class VenueDetailVC: UIViewController {
         if let venue = venue {
             navigationItem.title = venue.name
             
-            if let formattedAddress = venue.location.formattedAddress {
-                venueDetailContainer.venueAddressBody.text = "\(formattedAddress[0])\n\(formattedAddress[1])\n\(formattedAddress[2])"
+            if let address = venue.location.address, let city = venue.location.city, let state = venue.location.state, let zipcode = venue.location.postalCode {
+                venueDetailContainer.venueStreetAddressBody.text = address
+                venueDetailContainer.venueCityStateBody.text = "\(city), \(state) \(zipcode)"
             } else {
-                venueDetailContainer.venueAddressBody.text = "No address found"
+                venueDetailContainer.venueStreetAddressBody.text = "No address found"
+                venueDetailContainer.venueStreetAddressBody.textColor = Styler.Color.errorRed
+                venueDetailContainer.venueCityStateBody.isHidden = true
             }
             
             if let formattedPhoneNumber = venue.contact?.formattedPhone {
@@ -89,7 +104,7 @@ class VenueDetailVC: UIViewController {
             }
             
             if let website = venue.url {
-                venueDetailContainer.venueWebsiteButton.setTitle(website, for: .normal)
+                venueDetailContainer.venueWebsiteButton.setTitle(venue.name, for: .normal)
             } else {
                 venueDetailContainer.venueWebsiteButton.isEnabled = false
                 venueDetailContainer.venueWebsiteButton.setTitle("No website found", for: .disabled)
@@ -102,7 +117,7 @@ class VenueDetailVC: UIViewController {
                 venueSocialContainer.twitterButton.setTitle("N/A", for: .disabled)
             }
             
-            if let instagram = venue.contact?.facebook {
+            if let instagram = venue.contact?.instagram {
                 venueSocialContainer.instagramButton.setTitle("@\(instagram)", for: .normal)
             } else {
                 venueSocialContainer.instagramButton.isEnabled = false
