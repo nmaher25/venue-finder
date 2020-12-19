@@ -19,11 +19,7 @@ class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
     let locationManager = CLLocationManager()
-    var currentLocation: CLLocation? {
-        didSet {
-            print("Current location was set")
-        }
-    }
+    var currentLocation: CLLocation? 
     
     let venueSearchView = VenueFinderSearchView()
     
@@ -91,17 +87,6 @@ class VenueSearchVC: UIViewController {
             fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
             print("Fetching venues against user's lat and long")
         }
-        /*
-        if CLLocationManager.locationServicesEnabled() {
-            if let currentLocation = currentLocation {
-                let venueSearchText = venueSearchView.venueTextField.text ?? ""
-                let lat = Double(currentLocation.coordinate.latitude)
-                let long = Double(currentLocation.coordinate.longitude)
-            
-                fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
-                print("Fetching venues against user's lat and long")
-            }
-        }*/
     }
 
     @objc func searchButtonTapped() {
@@ -168,6 +153,22 @@ class VenueSearchVC: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func presentAlertForSearchError(forVenueError venueError: ErrorResponse.VenueError) {
+        let alertCopy: String
+        switch venueError.code {
+        case 403, 429: //hourly/daily rate limit exceeded
+            alertCopy = "Daily rate limit reached for this API - Hire me to see more!"
+        case 400: //geocode errors, etc
+            alertCopy = "Your location could not found, or no locations with your query were found. Try searching again!"
+        default:
+            alertCopy = "Sorry, there was an issue with your request. Please try again in a few seconds."
+        }
+        let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // Tableview Delegate & Datasource
@@ -210,17 +211,29 @@ extension VenueSearchVC: CLLocationManagerDelegate {
 // Helpers
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
-        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
+        FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
             print("fetchVenues at lat/long got results")
             self.venues = venues
+        }) { (error) in
+            guard let error = error else { return }
+            DispatchQueue.main.async {
+                self.presentAlertForSearchError(forVenueError: error.meta)
+            }
         }
     }
     
     func fetchVenues(nearPlace place: String, forQuery query: String) {
-        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
+        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
+            print("venues near were valid")
             self.venues = venues
+        }) { (error) in
+            print("VenueSearchVC error block with error \(error)")
+            guard let error = error else { return }
+            DispatchQueue.main.async {
+                self.presentAlertForSearchError(forVenueError: error.meta)
+            }
         }
     }
     

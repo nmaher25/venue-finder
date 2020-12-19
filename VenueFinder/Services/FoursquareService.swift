@@ -8,8 +8,9 @@
 
 import Foundation
 
-// Singleton
 class FoursquareService {
+    
+    // Singleton declaration
     static let shared = FoursquareService()
     
     private init() { }
@@ -24,7 +25,8 @@ class FoursquareService {
     public func fetchVenues(atLatitude lat: Double,
                           atLongitude long: Double,
                           forQuery query: String,
-                          completion: @escaping([Venue]?) -> Void) {
+                          completion: @escaping([Venue]?) -> Void,
+                          errorCompletion: @escaping(ErrorResponse?) -> Void) {
         
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
@@ -43,9 +45,13 @@ class FoursquareService {
             if let data = data {
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
                     completion(venues.response.venues)
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
                 }
-            } else if let error = error {
-                completion(nil) //add error message handling here
+            } else {
+                completion(nil)
             }
             
         }
@@ -54,7 +60,8 @@ class FoursquareService {
     
     public func fetchVenues(nearPlace near: String,
                             forQuery query: String,
-                            completion: @escaping([Venue]?) -> Void) {
+                            completion: @escaping([Venue]?) -> Void,
+                            errorCompletion: @escaping(ErrorResponse?) -> Void) {
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
             "near": "\(near)",
@@ -68,14 +75,18 @@ class FoursquareService {
         let url = baseUrl.withQueries(queryParams)!
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
-            
             if let data = data {
+                //print("DEBUG: data is \(String(data: data, encoding: .utf8))")
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
-                    print("DEBUG: fetchVenuesNear API got results")
                     completion(venues.response.venues)
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
                 }
-            } else if let error = error {
-                completion(nil) //add error message handling here
+            } else {
+                completion(nil) 
+                errorCompletion(nil)
             }
             
         }
@@ -83,7 +94,8 @@ class FoursquareService {
     }
     
     public func fetchVenueDetails(forVenueId venueId: String,
-                                  completion: @escaping(Venue?) -> Void) {
+                                  completion: @escaping(Venue?) -> Void,
+                                  errorCompletion: @escaping(ErrorResponse?) -> Void) {
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/\(venueId)")!
         let queryParams: [String: String] = [
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
@@ -98,11 +110,14 @@ class FoursquareService {
             
             if let data = data, let string = String(data: data, encoding: .utf8) {
                 print(string)
-                let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
-                print("DEBUG: fetchVenueDetails API got results")
-                completion(venue.response.venue)
-            } else if let error = error {
-                print("DEBUG: fetchVenueDetails ERROR")
+                if let venue = try? jsonDecoder.decode(ResponseDetail.self, from: data) {
+                    completion(venue.response.venue)
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
+                }
+            } else {
                 completion(nil) //add error message handling here
             }
             
