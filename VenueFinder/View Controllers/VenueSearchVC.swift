@@ -109,6 +109,19 @@ class VenueSearchVC: UIViewController {
         let venueSearchText = venueSearchView.venueTextField.text ?? ""
         
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
+        
+        DispatchQueue.main.async {
+            if self.venues.isEmpty {
+                let searchString = venueSearchText.isEmpty ? "for venues near \(locationSearchText)" : "for \(venueSearchText) venues near \(locationSearchText)"
+                let alert = UIAlertController(title: "No Results",
+                                              message: "Your search \(searchString) returned 0 results. Try again!",
+                    preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     func configureUI() {
@@ -220,6 +233,7 @@ extension VenueSearchVC {
     func fetchVenues(nearPlace place: String, forQuery query: String) {
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
             guard let venues = venues else { return }
+            print("venues near were valid")
             self.venues = venues
         }
     }

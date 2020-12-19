@@ -104,7 +104,7 @@ class VenueTableViewCell: UITableViewCell {
     
     func configure() {
         guard let venue = self.venue else { return }
-        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
+        //fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
@@ -125,10 +125,8 @@ class VenueTableViewCell: UITableViewCell {
     }
     
     func configurePhoto() {
-        guard let venuePhoto = venuePhoto, let venuePhotoItems = venuePhoto.items else { return }
-        if let venuePhotoInfo = venuePhotoItems.first {
+        if let venuePhoto = venuePhoto, let venuePhotoItems = venuePhoto.items, let venuePhotoInfo = venuePhotoItems.first {
             guard let url = URL(string: "\(venuePhotoInfo.prefix)\(venuePhotoInfo.width)x\(venuePhotoInfo.height)\(venuePhotoInfo.suffix)") else { return }
-            print("venuePhotos did exist, URL is:\n\(url)")
             venueImageView.sd_setImage(with: url)
         } else {
             DispatchQueue.main.async {

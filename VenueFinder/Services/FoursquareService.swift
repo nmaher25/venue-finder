@@ -70,11 +70,24 @@ class FoursquareService {
             let jsonDecoder = JSONDecoder()
             
             if let data = data {
+                do {
+                    let venues = try jsonDecoder.decode(Response.self, from: data)
+                    completion(venues.response.venues)
+                } catch let error {
+                    print(error)
+                }
+                
+                /*
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
                     print("DEBUG: fetchVenuesNear API got results")
                     completion(venues.response.venues)
-                }
+                } else {
+                    print("DEBUG: fetchVenuesNear could not be decoded")
+                    print(String(data: data, encoding: .utf8))
+                }*/
             } else if let error = error {
+                print("DEBUG: fetchVenuesNear error completion time")
+                print("\(error)")
                 completion(nil) //add error message handling here
             }
             
