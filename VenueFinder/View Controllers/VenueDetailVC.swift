@@ -63,7 +63,6 @@ class VenueDetailVC: UIViewController {
     
     // MARK: - Selectors
     @objc func phoneButtonTapped() {
-        print("Handle phone tapped")
         if let venue = venue, let venueContact = venue.contact, let venuePhone = venueContact.phone {
             if let phoneUrl = URL(string: "tel://\(venuePhone)") {
 
@@ -76,7 +75,6 @@ class VenueDetailVC: UIViewController {
     }
     
     @objc func websiteButtonTapped() {
-        print("Handle website button tapped")
         if let venue = venue, let venueUrl = venue.url {
             if let url = URL(string: venueUrl) {
                 let config = SFSafariViewController.Configuration()
@@ -89,7 +87,6 @@ class VenueDetailVC: UIViewController {
     }
     
     @objc func twitterButtonTapped() {
-        print("Handle twitter button tapped")
         if let venue = venue, let venueContact = venue.contact, let venueTwitter = venueContact.twitter {
             if let url = URL(string: "https://www.twitter.com/\(venueTwitter)") {
                 let config = SFSafariViewController.Configuration()
@@ -102,7 +99,6 @@ class VenueDetailVC: UIViewController {
     }
     
     @objc func instagramButtonTapped() {
-        print("Handle instagram button tapped")
         if let venue = venue, let venueContact = venue.contact, let venueInstagram = venueContact.instagram {
             if let url = URL(string: "https://www.instagram.com/\(venueInstagram)") {
                 let config = SFSafariViewController.Configuration()
@@ -115,7 +111,6 @@ class VenueDetailVC: UIViewController {
     }
     
     @objc func facebookButtonTapped() {
-        print("Handle facebook button tapped")
         if let venue = venue, let venueContact = venue.contact, let venueFacebook = venueContact.facebook {
             if let url = URL(string: "https://www.facebook.com/\(venueFacebook)") {
                 let config = SFSafariViewController.Configuration()
@@ -132,7 +127,6 @@ class VenueDetailVC: UIViewController {
         view.addSubview(venueDetailContainer)
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        //venueDetailContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         venueDetailContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
         venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -5).isActive = true
@@ -141,7 +135,6 @@ class VenueDetailVC: UIViewController {
         view.addSubview(venueSocialContainer)
         venueSocialContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        //venueSocialContainer.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         venueSocialContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
         venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 5).isActive = true
         venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
@@ -188,21 +181,21 @@ class VenueDetailVC: UIViewController {
                 venueSocialContainer.twitterButton.setTitle("@\(twitter)", for: .normal)
             } else {
                 venueSocialContainer.twitterButton.isEnabled = false
-                venueSocialContainer.twitterButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.twitterButton.setTitle("n/a", for: .disabled)
             }
             
             if let instagram = venue.contact?.instagram {
                 venueSocialContainer.instagramButton.setTitle("@\(instagram)", for: .normal)
             } else {
                 venueSocialContainer.instagramButton.isEnabled = false
-                venueSocialContainer.instagramButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.instagramButton.setTitle("n/a", for: .disabled)
             }
             
             if let facebookUsername = venue.contact?.facebookUsername, let facebookId = venue.contact?.facebook {
                 venueSocialContainer.facebookButton.setTitle("/\(facebookUsername)", for: .normal)
             } else {
                 venueSocialContainer.facebookButton.isEnabled = false
-                venueSocialContainer.facebookButton.setTitle("N/A", for: .disabled)
+                venueSocialContainer.facebookButton.setTitle("n/a", for: .disabled)
             }
         }
     }
