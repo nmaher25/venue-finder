@@ -19,7 +19,11 @@ class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
     let locationManager = CLLocationManager()
-    var currentLocation: CLLocation? = nil
+    var currentLocation: CLLocation? {
+        didSet {
+            print("Current location was set")
+        }
+    }
     
     let venueSearchView = VenueFinderSearchView()
     
@@ -32,6 +36,7 @@ class VenueSearchVC: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                print("didset venues called also")
             }
         }
     }
@@ -72,12 +77,21 @@ class VenueSearchVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         configureUI()
+        configureUserLocationBasedOnPermissions()
         venueSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
     
     @objc func locationBarButtonItemTapped() {
         configureUserLocationBasedOnPermissions()
+        if let currentLocation = currentLocation {
+            let venueSearchText = venueSearchView.venueTextField.text ?? ""
+            let lat = Double(currentLocation.coordinate.latitude)
+            let long = Double(currentLocation.coordinate.longitude)
         
+            fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+            print("Fetching venues against user's lat and long")
+        }
+        /*
         if CLLocationManager.locationServicesEnabled() {
             if let currentLocation = currentLocation {
                 let venueSearchText = venueSearchView.venueTextField.text ?? ""
@@ -85,8 +99,9 @@ class VenueSearchVC: UIViewController {
                 let long = Double(currentLocation.coordinate.longitude)
             
                 fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+                print("Fetching venues against user's lat and long")
             }
-        }
+        }*/
     }
 
     @objc func searchButtonTapped() {
@@ -125,6 +140,7 @@ class VenueSearchVC: UIViewController {
             
         case .notDetermined:
             self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.startUpdatingLocation()
             
         case .denied, .restricted:
             self.presentLocationAccessNeededAlert()
@@ -187,7 +203,7 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
 
 extension VenueSearchVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.currentLocation = locations.last
+        self.currentLocation = locations.first
     }
 }
 
@@ -196,6 +212,7 @@ extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
         FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query) { (venues) in
             guard let venues = venues else { return }
+            print("fetchVenues at lat/long got results")
             self.venues = venues
         }
     }
