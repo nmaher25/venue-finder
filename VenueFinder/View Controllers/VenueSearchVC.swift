@@ -110,6 +110,7 @@ class VenueSearchVC: UIViewController {
         
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
         
+        /*
         DispatchQueue.main.async {
             if self.venues.isEmpty {
                 let searchString = venueSearchText.isEmpty ? "for venues near \(locationSearchText)" : "for \(venueSearchText) venues near \(locationSearchText)"
@@ -121,7 +122,7 @@ class VenueSearchVC: UIViewController {
                 
                 self.present(alert, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
     func configureUI() {
@@ -181,6 +182,22 @@ class VenueSearchVC: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func presentAlertForSearchError(forVenueError venueError: ErrorResponse.VenueError) {
+        let alertCopy: String
+        switch venueError.code {
+        case 403, 429: //hourly/daily rate limit exceeded
+            alertCopy = "Hire me to see more!"
+        case 400: //geocode errors, etc
+            alertCopy = "Your location could not found, or no locations with your query were found. Try searching again!"
+        default:
+            alertCopy = "Sorry, there was an issue with your request. Please try again in a few seconds."
+        }
+        let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // Tableview Delegate & Datasource
@@ -231,11 +248,24 @@ extension VenueSearchVC {
     }
     
     func fetchVenues(nearPlace place: String, forQuery query: String) {
-        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues) in
+        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
             print("venues near were valid")
             self.venues = venues
+        }) { (error) in
+            print("VenueSearchVC error block with error \(error)")
+            guard let error = error else { return }
+            DispatchQueue.main.async {
+                self.presentAlertForSearchError(forVenueError: error.meta)
+            }
         }
+        
+        /*
+        FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query) { (venues, error) in
+            guard let venues = venues else { return }
+            print("venues near were valid")
+            self.venues = venues
+        }*/
     }
     
     func toggleEmptyStateView() {

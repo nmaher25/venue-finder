@@ -54,7 +54,8 @@ class FoursquareService {
     
     public func fetchVenues(nearPlace near: String,
                             forQuery query: String,
-                            completion: @escaping([Venue]?) -> Void) {
+                            completion: @escaping([Venue]?) -> Void,
+                            errorCompletion: @escaping(ErrorResponse?) -> Void) {
         let baseUrl = URL(string: "https://api.foursquare.com/v2/venues/search")!
         let queryParams: [String: String] = [
             "near": "\(near)",
@@ -68,27 +69,18 @@ class FoursquareService {
         let url = baseUrl.withQueries(queryParams)!
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
-            
             if let data = data {
-                do {
-                    let venues = try jsonDecoder.decode(Response.self, from: data)
-                    completion(venues.response.venues)
-                } catch let error {
-                    print(error)
-                }
-                
-                /*
+                //print("DEBUG: data is \(String(data: data, encoding: .utf8))")
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
-                    print("DEBUG: fetchVenuesNear API got results")
                     completion(venues.response.venues)
-                } else {
-                    print("DEBUG: fetchVenuesNear could not be decoded")
-                    print(String(data: data, encoding: .utf8))
-                }*/
-            } else if let error = error {
-                print("DEBUG: fetchVenuesNear error completion time")
-                print("\(error)")
-                completion(nil) //add error message handling here
+                    errorCompletion(nil)
+                } else if let venueError = try? jsonDecoder.decode(ErrorResponse.self, from: data) {
+                    completion(nil)
+                    errorCompletion(venueError)
+                }
+            } else {
+                completion(nil) 
+                errorCompletion(nil)
             }
             
         }
