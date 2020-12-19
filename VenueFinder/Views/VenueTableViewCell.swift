@@ -128,6 +128,9 @@ class VenueTableViewCell: UITableViewCell {
         if let venuePhoto = venuePhoto, let venuePhotoItems = venuePhoto.items, let venuePhotoInfo = venuePhotoItems.first {
             guard let url = URL(string: "\(venuePhotoInfo.prefix)\(venuePhotoInfo.width)x\(venuePhotoInfo.height)\(venuePhotoInfo.suffix)") else { return }
             venueImageView.sd_setImage(with: url)
+            if let venue = venue {
+                FoursquareService.shared.imageUrlCache[venue.id] = url
+            }
         } else {
             DispatchQueue.main.async {
                 self.venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
