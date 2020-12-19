@@ -19,11 +19,7 @@ class VenueSearchVC: UIViewController {
     let reuseIdentifier = "VenueCell"
     
     let locationManager = CLLocationManager()
-    var currentLocation: CLLocation? {
-        didSet {
-            print("Current location was set")
-        }
-    }
+    var currentLocation: CLLocation? 
     
     let venueSearchView = VenueFinderSearchView()
     
@@ -91,17 +87,6 @@ class VenueSearchVC: UIViewController {
             fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
             print("Fetching venues against user's lat and long")
         }
-        /*
-        if CLLocationManager.locationServicesEnabled() {
-            if let currentLocation = currentLocation {
-                let venueSearchText = venueSearchView.venueTextField.text ?? ""
-                let lat = Double(currentLocation.coordinate.latitude)
-                let long = Double(currentLocation.coordinate.longitude)
-            
-                fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
-                print("Fetching venues against user's lat and long")
-            }
-        }*/
     }
 
     @objc func searchButtonTapped() {
@@ -109,20 +94,6 @@ class VenueSearchVC: UIViewController {
         let venueSearchText = venueSearchView.venueTextField.text ?? ""
         
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
-        
-        /*
-        DispatchQueue.main.async {
-            if self.venues.isEmpty {
-                let searchString = venueSearchText.isEmpty ? "for venues near \(locationSearchText)" : "for \(venueSearchText) venues near \(locationSearchText)"
-                let alert = UIAlertController(title: "No Results",
-                                              message: "Your search \(searchString) returned 0 results. Try again!",
-                    preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-            }
-        }*/
     }
     
     func configureUI() {

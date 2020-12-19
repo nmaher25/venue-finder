@@ -104,7 +104,7 @@ class VenueTableViewCell: UITableViewCell {
     
     func configure() {
         guard let venue = self.venue else { return }
-        //fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
+        fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
         
         DispatchQueue.main.async {
             self.venueNameLabel.text = venue.name
