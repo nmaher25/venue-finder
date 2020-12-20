@@ -102,17 +102,15 @@ class VenueSearchVC: UIViewController {
         venueSearchView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            venueSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            venueSearchView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            venueSearchView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            venueSearchView.heightAnchor.constraint(equalToConstant: 90),
+        venueSearchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        venueSearchView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        venueSearchView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        venueSearchView.heightAnchor.constraint(equalToConstant: 90).isActive = true
             
-            tableView.topAnchor.constraint(equalTo: venueSearchView.bottomAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+        tableView.topAnchor.constraint(equalTo: venueSearchView.bottomAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func configureUserLocationBasedOnPermissions() {
