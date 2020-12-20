@@ -10,6 +10,7 @@ import UIKit
 
 class VenueFinderSearchView: UIView {
     
+    // MARK: - Properties
     lazy var locationTextFieldView: UIView = {
         let view = Utilities.inputContainerView(textField: locationTextField)
         
@@ -53,6 +54,7 @@ class VenueFinderSearchView: UIView {
         return button
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -62,7 +64,7 @@ class VenueFinderSearchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    // MARK: - Helpers
     func configureUI() {
         addSubview(locationTextFieldView)
         addSubview(venueTextFieldView)

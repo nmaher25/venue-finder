@@ -11,6 +11,8 @@ import UIKit
 import SDWebImage
 
 class VenueTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
     var venue: Venue? {
         didSet {
             configure()
@@ -63,6 +65,7 @@ class VenueTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -102,6 +105,7 @@ class VenueTableViewCell: UITableViewCell {
         self.venueImageView.image = nil
     }
     
+    // MARK: - Helpers
     func configure() {
         guard let venue = self.venue else { return }
         fetchVenuePhotos(forVenueId: venue.id, withLimit: 1, withOffset: 0)
@@ -137,7 +141,10 @@ class VenueTableViewCell: UITableViewCell {
             }
         }
     }
-    
+}
+
+// MARK: - API
+extension VenueTableViewCell {
     func fetchVenuePhotos(forVenueId venueId: String, withLimit limit: Int, withOffset offset: Int) {
         FoursquareService.shared.fetchVenuePhotos(forVenueId: venueId, withLimit: limit, withOffset: offset) { (venuePhoto) in
             guard let venuePhoto = venuePhoto else { return }

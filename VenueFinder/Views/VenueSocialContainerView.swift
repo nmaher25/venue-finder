@@ -11,6 +11,7 @@ import UIKit
 
 class VenueSocialContainerView: UIScrollView {
     
+    // MARK: - Properties
     lazy var venueSocialTitle: UILabel = {
         let label = UILabel()
         
@@ -68,7 +69,7 @@ class VenueSocialContainerView: UIScrollView {
         return button
     }()
     
-    
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -83,6 +84,7 @@ class VenueSocialContainerView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func configureUI() {
         addSubview(venueSocialTitle)
         venueSocialTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -116,17 +118,5 @@ class VenueSocialContainerView: UIScrollView {
         facebookStack.translatesAutoresizingMaskIntoConstraints = false
         facebookStack.topAnchor.constraint(equalTo: instagramStack.bottomAnchor, constant: 8).isActive = true
         facebookStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        
-        /*
-        let fullSocialStack = UIStackView(arrangedSubviews: [venueSocialTitle, twitterStack, instagramStack, facebookStack])
-        fullSocialStack.axis = .vertical
-        fullSocialStack.spacing = 10
-        
-        addSubview(fullSocialStack)
-        fullSocialStack.translatesAutoresizingMaskIntoConstraints = false
-        fullSocialStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        fullSocialStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        fullSocialStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        fullSocialStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true*/
     }
 }

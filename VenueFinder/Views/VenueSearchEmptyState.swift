@@ -11,6 +11,7 @@ import UIKit
 
 class VenueSearchEmptyState: UIView {
     
+    // MARK: - Properties
     lazy var emptyStateTitle: UILabel = {
         let label = UILabel()
         
@@ -37,6 +38,7 @@ class VenueSearchEmptyState: UIView {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -46,6 +48,7 @@ class VenueSearchEmptyState: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func configureUI() {
         backgroundColor = .white
         let stack = UIStackView(arrangedSubviews: [emptyStateTitle, emptyStateBody])

@@ -16,6 +16,8 @@ protocol VenueSearchDelegate: AnyObject {
 }
 
 class VenueSearchVC: UIViewController {
+    
+    // MARK: - Properties
     let reuseIdentifier = "VenueCell"
     
     let locationManager = CLLocationManager()
@@ -32,11 +34,11 @@ class VenueSearchVC: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                print("didset venues called also")
             }
         }
     }
     
+    // MARK: - Lifecycle
     init() {
         super.init(nibName: nil, bundle: nil)
         tableView.delegate = self
@@ -72,6 +74,7 @@ class VenueSearchVC: UIViewController {
         venueSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Selectors
     @objc func locationBarButtonItemTapped() {
         configureUserLocationBasedOnPermissions()
         if let currentLocation = currentLocation {
@@ -91,6 +94,7 @@ class VenueSearchVC: UIViewController {
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
     }
     
+    // MARK: - Helpers
     func configureUI() {
         tableView.rowHeight = 120
         view.addSubview(venueSearchView)
@@ -166,7 +170,7 @@ class VenueSearchVC: UIViewController {
     }
 }
 
-// Tableview Delegate & Datasource
+// MARK: - UITableViewDelegate & DataSource
 extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if venues.count == 0 {
@@ -197,13 +201,14 @@ extension VenueSearchVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
 extension VenueSearchVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.first
     }
 }
 
-// Helpers
+// MARK: - API
 extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
         FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query, completion: { (venues) in
@@ -229,14 +234,6 @@ extension VenueSearchVC {
             DispatchQueue.main.async {
                 self.presentAlertForSearchError(forVenueError: error.meta)
             }
-        }
-    }
-    
-    func toggleEmptyStateView() {
-        if venues.count == 0 {
-            tableView.showEmptyState()
-        } else {
-            tableView.hideEmptyState()
         }
     }
 }

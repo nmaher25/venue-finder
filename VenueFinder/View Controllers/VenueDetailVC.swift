@@ -11,6 +11,12 @@ import UIKit
 import SafariServices
 
 class VenueDetailVC: UIViewController {
+    
+    // MARK: - Properties
+    let venueDetailImage = UIImageView()
+    let venueDetailContainer = VenueDetailContainerView()
+    let venueSocialContainer = VenueSocialContainerView()
+    
     private var venue: Venue? {
         didSet {
             DispatchQueue.main.async {
@@ -19,12 +25,7 @@ class VenueDetailVC: UIViewController {
         }
     }
     
-    //private var venuePhoto: VenuePhoto?
-    
-    let venueDetailImage = UIImageView()
-    let venueDetailContainer = VenueDetailContainerView()
-    let venueSocialContainer = VenueSocialContainerView()
-    
+    // MARK: - Lifecycle
     init() {
         super.init(nibName: nil, bundle: nil)
         venueDetailContainer.venuePhoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
@@ -124,27 +125,7 @@ class VenueDetailVC: UIViewController {
         }
     }
     
-    func presentAlertForDetailError(forVenueError venueError: ErrorResponse.VenueError) {
-        let alertCopy: String
-        switch venueError.code {
-        case 403, 429: //hourly/daily rate limit exceeded
-            alertCopy = "Daily rate limit reached for this API - hire me to see more!"
-        case 400:
-            alertCopy = "Sorry, we could not retrieve any details for this venue."
-        default:
-            alertCopy = "Sorry, there was an issue with your request. Please try again in a few seconds."
-        }
-        let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
-        
-        alert.addAction(UIAlertAction(title: "Back", style: .default, handler: { (alert) -> Void in
-            if let navController = self.navigationController {
-                navController.popViewController(animated: true)
-            }
-        }))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    
+    // MARK: - Helpers
     func configureUI() {
         view.addSubview(venueDetailContainer)
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -227,16 +208,36 @@ class VenueDetailVC: UIViewController {
             }
         }
     }
+    
+    func presentAlertForDetailError(forVenueError venueError: ErrorResponse.VenueError) {
+        let alertCopy: String
+        switch venueError.code {
+        case 403, 429: //hourly/daily rate limit exceeded
+            alertCopy = "Daily rate limit reached for this API - hire me to see more!"
+        case 400:
+            alertCopy = "Sorry, we could not retrieve any details for this venue."
+        default:
+            alertCopy = "Sorry, there was an issue with your request. Please try again in a few seconds."
+        }
+        let alert = UIAlertController(title: "Error:\n\(venueError.errorDetail)", message: "\(alertCopy)", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Back", style: .default, handler: { (alert) -> Void in
+            if let navController = self.navigationController {
+                navController.popViewController(animated: true)
+            }
+        }))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
+// MARK: - VenueSearchDelegate
 extension VenueDetailVC: VenueSearchDelegate {
     func didSelectVenue(_ venue: Venue) {
         fetchVenueDetails(forVenue: venue)
     }
-    
-    
 }
 
+// MARK: - API
 extension VenueDetailVC {
     func fetchVenueDetails(forVenue venue: Venue) {
         FoursquareService.shared.fetchVenueDetails(forVenueId: venue.id, completion: { (venue) in
@@ -247,10 +248,5 @@ extension VenueDetailVC {
                 self.presentAlertForDetailError(forVenueError: detailError.meta)
             }
         }
-        
-        /*
-        FoursquareService.shared.fetchVenueDetails(forVenueId: venue.id) { (venue) in
-            self.venue = venue
-        }*/
     }
 }

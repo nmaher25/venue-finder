@@ -10,6 +10,7 @@ import UIKit
 
 class VenueDetailContainerView: UIScrollView {
     
+    // MARK: - Properties
     lazy var venueAddressTitle: UILabel = {
         let label = UILabel()
         
@@ -57,18 +58,17 @@ class VenueDetailContainerView: UIScrollView {
     
     lazy var venuePhoneButton: UIButton = {
         let button = UIButton(type: .system)
-        //button.setTitle("(609) 332-7595", for: .normal)
+
         return button
     }()
     
     lazy var venueWebsiteButton: UIButton = {
         let button = UIButton(type: .system)
         
-        //button.setTitle("www.google.com", for: .normal)
-        
         return button
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -83,6 +83,7 @@ class VenueDetailContainerView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func configureUI() {
         let addressStack = UIStackView(arrangedSubviews: [venueAddressTitle, venueStreetAddressBody, venueCityStateBody])
         addressStack.axis = .vertical
@@ -112,18 +113,5 @@ class VenueDetailContainerView: UIScrollView {
         websiteStack.topAnchor.constraint(equalTo: phoneStack.bottomAnchor, constant: 10).isActive = true
         websiteStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         websiteStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        
-        /*
-        let fullInfoStack = UIStackView(arrangedSubviews: [addressStack, phoneStack, websiteStack])
-        fullInfoStack.axis = .vertical
-        fullInfoStack.spacing = 10
-        
-        
-        addSubview(fullInfoStack)
-        fullInfoStack.translatesAutoresizingMaskIntoConstraints = false
-        fullInfoStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        fullInfoStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        fullInfoStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        fullInfoStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true*/
     }
 }
