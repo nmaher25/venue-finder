@@ -37,7 +37,7 @@
 
 ## Requirements
 
-- iOS 13.7+
+- iOS 13.1+
 - Xcode 11.0+
 
 ## Installation
