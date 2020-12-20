@@ -88,7 +88,7 @@ class VenueTableViewCell: UITableViewCell {
             
             self.addSubview(self.venueDistanceLabel)
             self.venueDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
-            self.venueDistanceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
+            self.venueDistanceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -35).isActive = true
             self.venueDistanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         }
     }
@@ -121,7 +121,7 @@ class VenueTableViewCell: UITableViewCell {
             }
             if let distance = venue.location.distance {
                 self.venueDistanceLabel.isHidden = false
-                self.venueDistanceLabel.text = "\(distance)"
+                self.venueDistanceLabel.text = self.configureDistanceText(forDistance: distance)
             } else {
                 self.venueDistanceLabel.isHidden = true
             }
@@ -139,6 +139,19 @@ class VenueTableViewCell: UITableViewCell {
             DispatchQueue.main.async {
                 self.venueImageView.image = UIImage(named: "nosign")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             }
+        }
+    }
+    
+    func configureDistanceText(forDistance distance: Double) -> String {
+        let miles = distance / 1609
+        let formattedMiles = Double(floor(100*miles)/100)
+        let feet = Int(distance * 3.281)
+        
+        switch feet {
+        case 0...1000:
+            return "\(feet) ft"
+        default:
+            return "\(formattedMiles) mi"
         }
     }
 }

@@ -141,7 +141,7 @@ class VenueDetailVC: UIViewController {
         venueSocialContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
         venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: Styler.Margin.small).isActive = true
         venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styler.Margin.medium).isActive = true
-        venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Styler.Margin.large).isActive = true
+        venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Styler.Margin.medium).isActive = true
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false

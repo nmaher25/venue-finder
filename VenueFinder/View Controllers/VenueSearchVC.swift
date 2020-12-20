@@ -79,18 +79,17 @@ class VenueSearchVC: UIViewController {
         configureUserLocationBasedOnPermissions()
         if let currentLocation = currentLocation {
             let venueSearchText = venueSearchView.venueTextField.text ?? ""
+            venueSearchView.locationTextField.text = "My Location"
             let lat = Double(currentLocation.coordinate.latitude)
             let long = Double(currentLocation.coordinate.longitude)
         
             fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
-            print("Fetching venues against user's lat and long")
         }
     }
 
     @objc func searchButtonTapped() {
         let locationSearchText = venueSearchView.locationTextField.text ?? ""
         let venueSearchText = venueSearchView.venueTextField.text ?? ""
-        
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
     }
     
@@ -211,7 +210,6 @@ extension VenueSearchVC {
     func fetchVenues(atLatitude lat: Double, atLongitude long: Double, forQuery query: String) {
         FoursquareService.shared.fetchVenues(atLatitude: lat, atLongitude: long, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
-            print("fetchVenues at lat/long got results")
             self.venues = venues
         }) { (error) in
             guard let error = error else { return }
@@ -224,10 +222,8 @@ extension VenueSearchVC {
     func fetchVenues(nearPlace place: String, forQuery query: String) {
         FoursquareService.shared.fetchVenues(nearPlace: place, forQuery: query, completion: { (venues) in
             guard let venues = venues else { return }
-            print("venues near were valid")
             self.venues = venues
         }) { (error) in
-            print("VenueSearchVC error block with error \(error)")
             guard let error = error else { return }
             DispatchQueue.main.async {
                 self.presentAlertForSearchError(forVenueError: error.meta)

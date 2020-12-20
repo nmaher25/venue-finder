@@ -34,14 +34,15 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "2",
+            "limit": "10",
             "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
         ]
         
+        let urlSession = URLSession(configuration: URLSessionConfiguration.default)
         let url = baseUrl.withQueries(queryParams)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in //change this to our own custom session 
+        let task = urlSession.dataTask(with: url) { (data, response, error) in //change this to our own custom session
             let jsonDecoder = JSONDecoder()
             
             if let data = data {
@@ -68,7 +69,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "1",
+            "limit": "10",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
@@ -78,7 +79,6 @@ class FoursquareService {
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data {
-                //print("DEBUG: data is \(String(data: data, encoding: .utf8))")
                 if let venues = try? jsonDecoder.decode(Response.self, from: data) {
                     completion(venues.response.venues)
                     errorCompletion(nil)
@@ -110,8 +110,7 @@ class FoursquareService {
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let string = String(data: data, encoding: .utf8) {
-                print(string)
+            if let data = data {
                 if let venue = try? jsonDecoder.decode(ResponseDetail.self, from: data) {
                     completion(venue.response.venue)
                     errorCompletion(nil)
@@ -120,7 +119,7 @@ class FoursquareService {
                     errorCompletion(venueError)
                 }
             } else {
-                completion(nil) //add error message handling here
+                completion(nil)
             }
             
         }
@@ -145,14 +144,12 @@ class FoursquareService {
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let string = String(data: data, encoding: .utf8) {
-                print(string)
-                let venuePhoto = try! jsonDecoder.decode(PhotoResponse.self, from: data)
-                print("DEBUG: fetchVenuePhotos API got results")
-                completion(venuePhoto.response.photos)
-            } else if let error = error {
-                print("DEBUG: fetchVenueDetails ERROR")
-                completion(nil) //add error message handling here
+            if let data = data {
+                if let venuePhoto = try? jsonDecoder.decode(PhotoResponse.self, from: data) {
+                    completion(venuePhoto.response.photos)
+                }
+            } else {
+                completion(nil)
             }
             
         }
