@@ -65,6 +65,7 @@ class VenueSearchVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = Styler.Color.pinkMain
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.delegate = self
         
         configureUI()
         configureUserLocationBasedOnPermissions()
@@ -236,6 +237,19 @@ extension VenueSearchVC {
             tableView.showEmptyState()
         } else {
             tableView.hideEmptyState()
+        }
+    }
+}
+
+extension VenueSearchVC: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .push:
+            return ImageResizePushAnimator()
+        case .pop:
+            return ImageResizePopAnimator()
+        default:
+            return nil
         }
     }
 }
