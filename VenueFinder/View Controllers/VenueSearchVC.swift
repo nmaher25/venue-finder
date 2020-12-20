@@ -56,6 +56,9 @@ class VenueSearchVC: UIViewController {
         let locationBarButtonItem = UIBarButtonItem(image: locationButtonImage, style: .plain, target: self, action: #selector(locationBarButtonItemTapped))
         self.navigationItem.rightBarButtonItem = locationBarButtonItem
         
+        self.venueSearchView.locationTextField.delegate = self
+        self.venueSearchView.venueTextField.delegate = self
+        
         locationManager.delegate = self
         
         view.backgroundColor = Styler.Color.pinkMain
@@ -242,6 +245,13 @@ extension VenueSearchVC: UINavigationControllerDelegate {
         default:
             return nil
         }
+    }
+}
+
+extension VenueSearchVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 

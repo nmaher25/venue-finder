@@ -52,16 +52,6 @@ class VenueDetailVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = Styler.Color.pinkMain
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        
-        /***** for use when over api limit *****/
-        /*let jsonDecoder = JSONDecoder()
-        if let data = dummyVenueDetailData {
-            let venue = try! jsonDecoder.decode(ResponseDetail.self, from: data)
-            self.venue = venue.response.venue
-        } else {
-            print("bad")
-        }*/
     }
     
     // MARK: - Selectors
