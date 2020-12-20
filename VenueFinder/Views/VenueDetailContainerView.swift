@@ -87,12 +87,12 @@ class VenueDetailContainerView: UIScrollView {
     func configureUI() {
         let addressStack = UIStackView(arrangedSubviews: [venueAddressTitle, venueStreetAddressBody, venueCityStateBody])
         addressStack.axis = .vertical
-        addressStack.spacing = 5
+        addressStack.spacing = Styler.Margin.small
         
         addSubview(addressStack)
         addressStack.translatesAutoresizingMaskIntoConstraints = false
-        addressStack.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        addressStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        addressStack.topAnchor.constraint(equalTo: topAnchor, constant: Styler.Margin.medium).isActive = true
+        addressStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
         
         
         let phoneStack = UIStackView(arrangedSubviews: [venuePhoneTitle, venuePhoneButton])
@@ -101,8 +101,8 @@ class VenueDetailContainerView: UIScrollView {
         
         addSubview(phoneStack)
         phoneStack.translatesAutoresizingMaskIntoConstraints = false
-        phoneStack.topAnchor.constraint(equalTo: addressStack.bottomAnchor, constant: 10).isActive = true
-        phoneStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        phoneStack.topAnchor.constraint(equalTo: addressStack.bottomAnchor, constant: Styler.Margin.medium).isActive = true
+        phoneStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
         
         let websiteStack = UIStackView(arrangedSubviews: [venueWebsiteTitle, venueWebsiteButton])
         websiteStack.axis = .vertical
@@ -110,8 +110,8 @@ class VenueDetailContainerView: UIScrollView {
         
         addSubview(websiteStack)
         websiteStack.translatesAutoresizingMaskIntoConstraints = false
-        websiteStack.topAnchor.constraint(equalTo: phoneStack.bottomAnchor, constant: 10).isActive = true
-        websiteStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        websiteStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        websiteStack.topAnchor.constraint(equalTo: phoneStack.bottomAnchor, constant: Styler.Margin.medium).isActive = true
+        websiteStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
+        websiteStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -Styler.Margin.medium).isActive = true
     }
 }

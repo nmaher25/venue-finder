@@ -47,7 +47,7 @@ class VenueFinderSearchView: UIView {
         button.heightAnchor.constraint(equalToConstant: 70).isActive = true
         button.widthAnchor.constraint(equalToConstant: 70).isActive = true
         button.layer.cornerRadius = 70 / 2
-        button.layer.borderWidth = 1
+        button.layer.borderWidth = 2
         button.layer.backgroundColor = UIColor.white.cgColor
         button.layer.borderColor = Styler.Color.lightPinkDetail.cgColor
         
@@ -74,21 +74,19 @@ class VenueFinderSearchView: UIView {
         locationTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         venueTextFieldView.translatesAutoresizingMaskIntoConstraints = false
         searchButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            locationTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            locationTextFieldView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            locationTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
-            locationTextFieldView.heightAnchor.constraint(equalToConstant: 30),
+
+        locationTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: Styler.Margin.medium).isActive = true
+        locationTextFieldView.topAnchor.constraint(equalTo: self.topAnchor, constant: Styler.Margin.medium).isActive = true
+        locationTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100).isActive = true
+        locationTextFieldView.heightAnchor.constraint(equalToConstant: 30).isActive = true
             
-            venueTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            venueTextFieldView.topAnchor.constraint(equalTo: locationTextFieldView.bottomAnchor, constant: 10),
-            venueTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100),
-            venueTextFieldView.heightAnchor.constraint(equalToConstant: 30),
+        venueTextFieldView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: Styler.Margin.medium).isActive = true
+        venueTextFieldView.topAnchor.constraint(equalTo: locationTextFieldView.bottomAnchor, constant: Styler.Margin.medium).isActive = true
+        venueTextFieldView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100).isActive = true
+        venueTextFieldView.heightAnchor.constraint(equalToConstant: 30).isActive = true
             
-            searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-            searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-        ])
+        searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -Styler.Margin.medium).isActive = true
+        searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Styler.Margin.medium).isActive = true
     }
     
 }

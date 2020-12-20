@@ -53,15 +53,15 @@ class VenueSearchEmptyState: UIView {
         backgroundColor = .white
         let stack = UIStackView(arrangedSubviews: [emptyStateTitle, emptyStateBody])
         stack.axis = .vertical
-        stack.spacing = 20
+        stack.spacing = Styler.Margin.large
         stack.alignment = .center
         
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         stack.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -40).isActive = true
-        stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+        stack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.large).isActive = true
+        stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -Styler.Margin.large).isActive = true
     }
     
 }

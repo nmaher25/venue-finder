@@ -131,17 +131,17 @@ class VenueDetailVC: UIViewController {
         venueDetailContainer.translatesAutoresizingMaskIntoConstraints = false
         
         venueDetailContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
-        venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -5).isActive = true
-        venueDetailContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        venueDetailContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Styler.Margin.medium).isActive = true
+        venueDetailContainer.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -Styler.Margin.small).isActive = true
+        venueDetailContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Styler.Margin.medium).isActive = true
         
         view.addSubview(venueSocialContainer)
         venueSocialContainer.translatesAutoresizingMaskIntoConstraints = false
         
         venueSocialContainer.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
-        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 5).isActive = true
-        venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        venueSocialContainer.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: Styler.Margin.small).isActive = true
+        venueSocialContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styler.Margin.medium).isActive = true
+        venueSocialContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Styler.Margin.large).isActive = true
         
         view.addSubview(venueDetailImage)
         venueDetailImage.translatesAutoresizingMaskIntoConstraints = false
@@ -149,10 +149,10 @@ class VenueDetailVC: UIViewController {
         venueDetailImage.layer.cornerRadius = 10
         venueDetailImage.layer.borderColor = Styler.Color.lightPinkDetail.cgColor
         venueDetailImage.layer.borderWidth = 2
-        venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        venueDetailImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
-        venueDetailImage.bottomAnchor.constraint(equalTo: venueDetailContainer.topAnchor, constant: -10).isActive = true
+        venueDetailImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Styler.Margin.medium).isActive = true
+        venueDetailImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Styler.Margin.medium).isActive = true
+        venueDetailImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Styler.Margin.medium).isActive = true
+        venueDetailImage.bottomAnchor.constraint(equalTo: venueDetailContainer.topAnchor, constant: -Styler.Margin.medium).isActive = true
         
         if let venue = venue {
             navigationItem.title = venue.name
@@ -177,6 +177,7 @@ class VenueDetailVC: UIViewController {
             } else {
                 venueDetailContainer.venuePhoneButton.isEnabled = false
                 venueDetailContainer.venuePhoneButton.setTitle("No phone number found", for: .disabled)
+                venueDetailContainer.venuePhoneButton.setTitleColor(Styler.Color.errorRed, for: .disabled)
             }
             
             if let website = venue.url {
@@ -184,6 +185,7 @@ class VenueDetailVC: UIViewController {
             } else {
                 venueDetailContainer.venueWebsiteButton.isEnabled = false
                 venueDetailContainer.venueWebsiteButton.setTitle("No website found", for: .disabled)
+                venueDetailContainer.venueWebsiteButton.setTitleColor(Styler.Color.errorRed, for: .disabled)
             }
             
             if let twitter = venue.contact?.twitter {

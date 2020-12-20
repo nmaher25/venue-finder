@@ -59,7 +59,7 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueDistanceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = Styler.Color.textLight
         
         return label
@@ -73,17 +73,17 @@ class VenueTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             self.addSubview(self.venueImageView)
             self.venueImageView.translatesAutoresizingMaskIntoConstraints = false
-            self.venueImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+            self.venueImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: Styler.Margin.medium).isActive = true
             self.venueImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
             
             let verticalStack = UIStackView(arrangedSubviews: [self.venueNameLabel, self.venueAddressLabel])
             verticalStack.axis = .vertical
-            verticalStack.spacing = 5
+            verticalStack.spacing = Styler.Margin.small
             
             self.addSubview(verticalStack)
             verticalStack.translatesAutoresizingMaskIntoConstraints = false
-            verticalStack.leftAnchor.constraint(equalTo: self.venueImageView.rightAnchor, constant: 10).isActive = true
-            verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+            verticalStack.leftAnchor.constraint(equalTo: self.venueImageView.rightAnchor, constant: Styler.Margin.medium).isActive = true
+            verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: Styler.Margin.medium).isActive = true
             verticalStack.widthAnchor.constraint(equalToConstant: self.frame.width*0.6).isActive = true
             
             self.addSubview(self.venueDistanceLabel)
@@ -116,7 +116,7 @@ class VenueTableViewCell: UITableViewCell {
                 self.venueAddressLabel.text = "\(address)\n\(city), \(state)"
             } else {
                 self.venueAddressLabel.text = "Could not find address"
-                self.venueAddressLabel.font = UIFont.systemFont(ofSize: 10)
+                self.venueAddressLabel.font = UIFont.systemFont(ofSize: 12)
                 self.venueAddressLabel.textColor = Styler.Color.errorRed
             }
             if let distance = venue.location.distance {
