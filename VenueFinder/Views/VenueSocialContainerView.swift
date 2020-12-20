@@ -11,10 +11,11 @@ import UIKit
 
 class VenueSocialContainerView: UIScrollView {
     
+    // MARK: - Properties
     lazy var venueSocialTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = Styler.Font.mediumBold
         label.text = "Socials"
         
         return label
@@ -68,7 +69,7 @@ class VenueSocialContainerView: UIScrollView {
         return button
     }()
     
-    
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -83,50 +84,39 @@ class VenueSocialContainerView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func configureUI() {
         addSubview(venueSocialTitle)
         venueSocialTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        venueSocialTitle.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        venueSocialTitle.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        venueSocialTitle.topAnchor.constraint(equalTo: topAnchor, constant: Styler.Margin.medium).isActive = true
+        venueSocialTitle.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
         
         let twitterStack = UIStackView(arrangedSubviews: [twitterImage, twitterButton])
         twitterStack.axis = .horizontal
-        twitterStack.spacing = 5
+        twitterStack.spacing = Styler.Margin.small
         
         addSubview(twitterStack)
         twitterStack.translatesAutoresizingMaskIntoConstraints = false
-        twitterStack.topAnchor.constraint(equalTo: venueSocialTitle.bottomAnchor, constant: 10).isActive = true
-        twitterStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        twitterStack.topAnchor.constraint(equalTo: venueSocialTitle.bottomAnchor, constant: Styler.Margin.medium).isActive = true
+        twitterStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
         
         let instagramStack = UIStackView(arrangedSubviews: [instagramImage, instagramButton])
         instagramStack.axis = .horizontal
-        instagramStack.spacing = 5
+        instagramStack.spacing = Styler.Margin.small
         
         addSubview(instagramStack)
         instagramStack.translatesAutoresizingMaskIntoConstraints = false
         instagramStack.topAnchor.constraint(equalTo: twitterStack.bottomAnchor, constant: 8).isActive = true
-        instagramStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        instagramStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
         
         let facebookStack = UIStackView(arrangedSubviews: [facebookImage, facebookButton])
         facebookStack.axis = .horizontal
-        facebookStack.spacing = 5
+        facebookStack.spacing = Styler.Margin.small
         
         addSubview(facebookStack)
         facebookStack.translatesAutoresizingMaskIntoConstraints = false
         facebookStack.topAnchor.constraint(equalTo: instagramStack.bottomAnchor, constant: 8).isActive = true
-        facebookStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        
-        /*
-        let fullSocialStack = UIStackView(arrangedSubviews: [venueSocialTitle, twitterStack, instagramStack, facebookStack])
-        fullSocialStack.axis = .vertical
-        fullSocialStack.spacing = 10
-        
-        addSubview(fullSocialStack)
-        fullSocialStack.translatesAutoresizingMaskIntoConstraints = false
-        fullSocialStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        fullSocialStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        fullSocialStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        fullSocialStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true*/
+        facebookStack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.medium).isActive = true
     }
 }

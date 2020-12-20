@@ -11,10 +11,11 @@ import UIKit
 
 class VenueSearchEmptyState: UIView {
     
+    // MARK: - Properties
     lazy var emptyStateTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = Styler.Font.largeBold
         label.textColor = Styler.Color.textNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -27,7 +28,7 @@ class VenueSearchEmptyState: UIView {
     lazy var emptyStateBody: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = Styler.Font.mediumNormal
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -37,6 +38,7 @@ class VenueSearchEmptyState: UIView {
         return label
     }()
     
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -46,19 +48,20 @@ class VenueSearchEmptyState: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
     func configureUI() {
         backgroundColor = .white
         let stack = UIStackView(arrangedSubviews: [emptyStateTitle, emptyStateBody])
         stack.axis = .vertical
-        stack.spacing = 20
+        stack.spacing = Styler.Margin.large
         stack.alignment = .center
         
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         stack.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -40).isActive = true
-        stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+        stack.leftAnchor.constraint(equalTo: leftAnchor, constant: Styler.Margin.large).isActive = true
+        stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -Styler.Margin.large).isActive = true
     }
     
 }

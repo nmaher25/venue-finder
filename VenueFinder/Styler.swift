@@ -22,11 +22,23 @@ struct Styler {
         static let textLight = UIColor.rgb(red: 128, green: 128, blue: 128)
     }
     
+    struct Margin {
+        static let small: CGFloat = 5
+        static let medium: CGFloat = 10
+        static let large: CGFloat = 20
+    }
     
     struct Font {
-        static let titleFont = UIFont(name: "Didot", size: 16)
-        static let titleBoldFont = UIFont(name: "Didot-Bold", size: 16)
-        static let bodyFont = UIFont(name: "Didot", size: 12)
-        static let bodyBoldFont = UIFont(name: "Didot-Bold", size: 12)
+        static let smallNormal = UIFont.systemFont(ofSize: 12)
+        static let smallBold = UIFont.boldSystemFont(ofSize: 12)
+        
+        static let mediumNormal = UIFont.systemFont(ofSize: 16)
+        static let mediumBold = UIFont.boldSystemFont(ofSize: 16)
+        
+        static let largeNormal = UIFont.systemFont(ofSize: 20)
+        static let largeBold = UIFont.boldSystemFont(ofSize: 20)
+        
+        static let xLargeNormal = UIFont.systemFont(ofSize: 24)
+        static let xLargeBold = UIFont.boldSystemFont(ofSize: 24)
     }
 }
