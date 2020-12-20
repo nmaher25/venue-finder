@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 
-open class ImageResizePushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+open class DetailFadePushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        1
+        0.5
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        // animation code goes here
         guard let toViewController = transitionContext.viewController(forKey: .to) else { return }
         
         transitionContext.containerView.addSubview(toViewController.view)
@@ -32,9 +31,9 @@ open class ImageResizePushAnimator: NSObject, UIViewControllerAnimatedTransition
     
 }
 
-open class ImageResizePopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+open class DetailFadePopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        1
+        0.5
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

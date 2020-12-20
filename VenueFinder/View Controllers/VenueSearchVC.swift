@@ -245,9 +245,9 @@ extension VenueSearchVC: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .push:
-            return ImageResizePushAnimator()
+            return DetailFadePushAnimator()
         case .pop:
-            return ImageResizePopAnimator()
+            return DetailFadePopAnimator()
         default:
             return nil
         }
