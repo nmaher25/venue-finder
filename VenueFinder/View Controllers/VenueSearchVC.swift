@@ -79,6 +79,7 @@ class VenueSearchVC: UIViewController {
         configureUserLocationBasedOnPermissions()
         if let currentLocation = currentLocation {
             let venueSearchText = venueSearchView.venueTextField.text ?? ""
+            venueSearchView.locationTextField.text = "My Location"
             let lat = Double(currentLocation.coordinate.latitude)
             let long = Double(currentLocation.coordinate.longitude)
         
@@ -90,7 +91,6 @@ class VenueSearchVC: UIViewController {
     @objc func searchButtonTapped() {
         let locationSearchText = venueSearchView.locationTextField.text ?? ""
         let venueSearchText = venueSearchView.venueTextField.text ?? ""
-        
         fetchVenues(nearPlace: locationSearchText, forQuery: venueSearchText)
     }
     

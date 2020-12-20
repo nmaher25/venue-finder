@@ -34,7 +34,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "2",
+            "limit": "10",
             "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
@@ -68,7 +68,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "1",
+            "limit": "10",
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
