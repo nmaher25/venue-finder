@@ -22,6 +22,10 @@ class FoursquareService {
         return dateFormatter.string(from: date)
     }()
     
+    // in retrospect I should have made this my main datasource and just have a dictionary keyed by a venue's ID, storing a [Venue, VenuePhoto] value.
+    // I ended up implementing this imageCache to "pass" the image to VenueDetails,
+    // since I wasn't fetching the image from VenueSearchVC but rather from the VenueTableViewCell.
+    // but this did save me from having to make an extra image API call from VenueDetails
     var imageUrlCache: [String: URL] = [:]
     
     public func fetchVenues(atLatitude lat: Double,
@@ -34,7 +38,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "ll": "\(lat),\(long)",
             "query": query,
-            "limit": "10",
+            "limit": "10", //you may want to change this to 3 or something low so you dont hit API rate limit too quickly
             "client_id": FOURSQUARE_CLIENT_ID,
             "client_secret": FOURSQUARE_CLIENT_SECRET,
             "v": versionDate
@@ -69,7 +73,7 @@ class FoursquareService {
         let queryParams: [String: String] = [
             "near": "\(near)",
             "query": "\(query)",
-            "limit": "10",
+            "limit": "10", //you may want to change this to 3 or something low so you dont hit API rate limit too quickly
             "client_id": "\(FOURSQUARE_CLIENT_ID)",
             "client_secret": "\(FOURSQUARE_CLIENT_SECRET)",
             "v": "\(versionDate)"
