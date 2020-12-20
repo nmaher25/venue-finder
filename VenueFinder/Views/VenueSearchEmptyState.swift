@@ -15,7 +15,7 @@ class VenueSearchEmptyState: UIView {
     lazy var emptyStateTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = Styler.Font.largeBold
         label.textColor = Styler.Color.textNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -28,7 +28,7 @@ class VenueSearchEmptyState: UIView {
     lazy var emptyStateBody: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = Styler.Font.mediumNormal
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

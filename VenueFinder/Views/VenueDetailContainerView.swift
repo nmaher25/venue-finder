@@ -14,7 +14,7 @@ class VenueDetailContainerView: UIScrollView {
     lazy var venueAddressTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = Styler.Font.mediumBold
         label.text = "Address"
         
         return label
@@ -22,7 +22,7 @@ class VenueDetailContainerView: UIScrollView {
     
     lazy var venuePhoneTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = Styler.Font.mediumBold
         label.text = "Phone"
         return label
     }()
@@ -30,7 +30,7 @@ class VenueDetailContainerView: UIScrollView {
     lazy var venueWebsiteTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = Styler.Font.mediumBold
         label.text = "Website"
         
         return label
@@ -39,7 +39,7 @@ class VenueDetailContainerView: UIScrollView {
     lazy var venueStreetAddressBody: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = Styler.Font.smallNormal
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 1
         
@@ -49,7 +49,7 @@ class VenueDetailContainerView: UIScrollView {
     lazy var venueCityStateBody: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = Styler.Font.smallNormal
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 1
         

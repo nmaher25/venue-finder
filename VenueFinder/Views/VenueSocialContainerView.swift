@@ -15,7 +15,7 @@ class VenueSocialContainerView: UIScrollView {
     lazy var venueSocialTitle: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = Styler.Font.mediumBold
         label.text = "Socials"
         
         return label

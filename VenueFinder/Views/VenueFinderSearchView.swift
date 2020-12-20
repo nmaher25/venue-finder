@@ -40,7 +40,7 @@ class VenueFinderSearchView: UIView {
         
         let buttonAttributedString = NSAttributedString(string: "GO!", attributes: [
             NSAttributedString.Key.foregroundColor: Styler.Color.textNormal,
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)
+            NSAttributedString.Key.font: Styler.Font.xLargeBold
         ])
         button.setAttributedTitle(buttonAttributedString, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

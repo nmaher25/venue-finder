@@ -39,7 +39,7 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = Styler.Font.largeBold
         label.textColor = Styler.Color.textNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -49,7 +49,7 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueAddressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = Styler.Font.mediumNormal
         label.textColor = Styler.Color.textLight
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -59,7 +59,7 @@ class VenueTableViewCell: UITableViewCell {
     
     private let venueDistanceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = Styler.Font.smallNormal
         label.textColor = Styler.Color.textLight
         
         return label
@@ -101,7 +101,7 @@ class VenueTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.venueAddressLabel.text = nil
         self.venueAddressLabel.textColor = Styler.Color.textLight
-        self.venueAddressLabel.font = UIFont.systemFont(ofSize: 16)
+        self.venueAddressLabel.font = Styler.Font.mediumNormal
         self.venueImageView.image = nil
     }
     
@@ -116,7 +116,7 @@ class VenueTableViewCell: UITableViewCell {
                 self.venueAddressLabel.text = "\(address)\n\(city), \(state)"
             } else {
                 self.venueAddressLabel.text = "Could not find address"
-                self.venueAddressLabel.font = UIFont.systemFont(ofSize: 12)
+                self.venueAddressLabel.font = Styler.Font.smallNormal
                 self.venueAddressLabel.textColor = Styler.Color.errorRed
             }
             if let distance = venue.location.distance {
