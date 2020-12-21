@@ -81,12 +81,14 @@ class VenueSearchVC: UIViewController {
     @objc func locationBarButtonItemTapped() {
         configureUserLocationBasedOnPermissions()
         if let currentLocation = currentLocation {
-            let venueSearchText = venueSearchView.venueTextField.text ?? ""
-            venueSearchView.locationTextField.text = "My Location"
-            let lat = Double(currentLocation.coordinate.latitude)
-            let long = Double(currentLocation.coordinate.longitude)
-        
-            fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+            if CLLocationManager.locationServicesEnabled() {
+                let venueSearchText = venueSearchView.venueTextField.text ?? ""
+                    venueSearchView.locationTextField.text = "My Location"
+                    let lat = Double(currentLocation.coordinate.latitude)
+                    let long = Double(currentLocation.coordinate.longitude)
+                
+                    fetchVenues(atLatitude: lat, atLongitude: long, forQuery: venueSearchText)
+            }
         }
     }
 
@@ -128,6 +130,7 @@ class VenueSearchVC: UIViewController {
             
         case .denied, .restricted:
             self.presentLocationAccessNeededAlert()
+            break
             
         @unknown default:
             print("whoops")
@@ -257,13 +260,17 @@ extension VenueSearchVC: UITextFieldDelegate {
 
 extension UITableView {
     fileprivate func showEmptyState() {
-        let emptyStateView = VenueSearchEmptyState(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
-        self.backgroundView = emptyStateView
-        self.separatorStyle = .none
+        DispatchQueue.main.async {
+            let emptyStateView = VenueSearchEmptyState(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+            self.backgroundView = emptyStateView
+            self.separatorStyle = .none
+        }
     }
     
     fileprivate func hideEmptyState() {
-        self.backgroundView = nil
-        self.separatorStyle = .singleLine
+        DispatchQueue.main.async {
+            self.backgroundView = nil
+            self.separatorStyle = .singleLine
+        }
     }
 }
