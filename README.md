@@ -2,6 +2,10 @@
 
 VenueFinder is an app to find venues of any kind near you or a specified location. Users can search venue names and keywords to narrow down results. 
 
+**Location Prompt** | **Location Disabled** | **Search by current location** | **Search by location keyword** | **View Venue Details** |
+:---: | :---: | :---: | :---: | :---: |
+![image](https://user-images.githubusercontent.com/62037569/102729340-5f202280-42fe-11eb-9d6e-28b245101625.png) | ![image](https://user-images.githubusercontent.com/62037569/102729361-78c16a00-42fe-11eb-9fe1-8024d7449362.png) | ![image](https://user-images.githubusercontent.com/62037569/102729348-6b0be480-42fe-11eb-9703-bfc024a7e10a.png) | ![image](https://user-images.githubusercontent.com/62037569/102729350-70692f00-42fe-11eb-8428-710e7314b127.png) | ![image](https://user-images.githubusercontent.com/62037569/102729366-7ced8780-42fe-11eb-8b15-c7cb2d7b42fc.png) |
+
 
 ## Features
 
@@ -60,8 +64,3 @@ target 'VenueFinder' do
 end
 ```
  
-
-## Usage
-**Location Prompt** | **Location Disabled** | **Search by current location** | **Search by location keyword** | **View Venue Details** |
-:---: | :---: | :---: | :---: | :---: |
-![image](https://user-images.githubusercontent.com/62037569/102729340-5f202280-42fe-11eb-9d6e-28b245101625.png) | ![image](https://user-images.githubusercontent.com/62037569/102729361-78c16a00-42fe-11eb-9fe1-8024d7449362.png) | ![image](https://user-images.githubusercontent.com/62037569/102729348-6b0be480-42fe-11eb-9703-bfc024a7e10a.png) | ![image](https://user-images.githubusercontent.com/62037569/102729350-70692f00-42fe-11eb-8428-710e7314b127.png) | ![image](https://user-images.githubusercontent.com/62037569/102729366-7ced8780-42fe-11eb-8b15-c7cb2d7b42fc.png) |
